@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>Welcome!</h1>
+<div sec:authorize="!isAuthenticated()">
+<p>Click <a th:href="@{/auth/facebook?scope=email}">here</a> to login with facebook.</p>
+<p>Click <a th:href="@{/auth/google?scope=email&amp;redirect_uri=http://localhost:8080/signup}">here</a> to login with google.</p>
+</div>
+<div sec:authorize="isAuthenticated()">Estas logueado
+<div social:connected="github">
+Estas conectado con Github
+</div>
+<div social:connected="google">
+Estas conectado con Google
+</div>
+<div social:connected="facebook">
+Estas conectado con Facebook
+</div>
+<div social:connected="trello">
+Estas conectado con Trello
+</div>
+<form th:action="@{connect/trello}" method="POST">
+<button social:notconnected="trello" type="submit">Conectar con Trello</button>
+</form>
+<form social:notconnected="github" th:action="@{connect/github}" method="POST">
+<button type="submit">Conectar con Github</button>
+</form>
+</div>
+</body>
+</html>
