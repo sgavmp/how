@@ -38,6 +38,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //    	registry.addResourceHandler("/static/**").addResourceLocations("/static/").setCachePeriod(31556926);
     	registry.addResourceHandler("/static/**").addResourceLocations("WEB-INF/static/");
+    	registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
     
     @Bean

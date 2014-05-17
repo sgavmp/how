@@ -9,12 +9,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.how.tfg.data.domain.common.BaseEntity;
 import com.how.tfg.data.domain.enumerate.Role;
 import com.how.tfg.data.domain.enumerate.SocialMediaService;
 
 @Entity
+@Table(name="how_user")
 public class User extends BaseEntity<Long> {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

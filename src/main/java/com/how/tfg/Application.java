@@ -14,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -38,6 +39,9 @@ public class Application implements CommandLineRunner{
     
 	@Autowired
 	UserRepository repository;
+	
+	@Autowired
+	Environment env;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -45,7 +49,7 @@ public class Application implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-    	
+    	System.out.println(env.getProperty("name"));
     }
 
 }
