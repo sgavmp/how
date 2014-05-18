@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
       show-sql: true
   profiles:
-    active: dev
+    active: mysql
 
 facebook:
   app:
@@ -45,16 +45,5 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 ---
 spring:
-  profiles: test
-name: test
-spring:
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5Dialect
----
-spring:
   profiles: prod
 name: prod
----
-spring:
-  profiles:
-    active: dev

@@ -1,1 +1,1 @@
-web: java -jar target/*.jar --spring.profiles.active=prod
+web: java -jar build/libs/how-tfg-*.jar --spring.profiles.active=prod

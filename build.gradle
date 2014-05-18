@@ -12,7 +12,6 @@ apply plugin: 'base'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
-apply plugin: 'war'
 
 jar {
     baseName = 'how-tfg'
@@ -61,3 +60,5 @@ dependencies {
     
     testCompile("junit:junit")
 }
+
+task stage(dependsOn: ['clean', 'build'])
