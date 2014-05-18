@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar build/libs/how-tfg.jar --server.port=80 --spring.profiles.active=prod
+web: java $JAVA_OPTS -jar build/libs/how-tfg.jar --server.port $PORT --spring.profiles.active=prod
