@@ -15,7 +15,6 @@ apply plugin: 'spring-boot'
 
 jar {
     baseName = 'how-tfg'
-    version =  '0.2.0'
 }
 
 ext.springBootVersion='1.0.2.RELEASE'
@@ -61,4 +60,4 @@ dependencies {
     testCompile("junit:junit")
 }
 
-task stage(dependsOn: ['clean', 'build'])
+task stage(dependsOn: ['build'])
