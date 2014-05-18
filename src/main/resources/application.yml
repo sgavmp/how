@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
       show-sql: true
   profiles:
-    active: mysql
+    active: dev
 
 facebook:
   app:
@@ -35,15 +35,25 @@ name: defecto
 spring:
   profiles: dev
 name: dev
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/how
-    username: tfg
-    password: tfg
-    driverClassName: org.postgresql.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
 ---
 spring:
   profiles: prod
 name: prod
+
+facebook:
+  app:
+    id: 247938578731313
+    secret: 52b72b8ba67c37c27443947eb651592c
+    scope: email
+google:
+  app:
+    id: 784957942335-75pu9toqpspinsnrso1aalolugbt1620.apps.googleusercontent.com
+    secret: dBM4xdvvSPlVmHj7olPQL5T_
+trello:
+  app:
+    id: c0e203c611f368e0ba71cfadbe05a909
+    secret: b0162b7e9d1939386870ed3941e157b086006f38362af7a7f842f3661ed96915
+github:
+  app:
+    id: 6ecfb9111c9d2e0263b4
+    secret: 318a1602f314812176f1552bc9a9369f3c3d4346
