@@ -1,33 +1,159 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example</title>
+<html lang="en">
+<head th:include="base :: head">
 </head>
 <body>
-<h1>Welcome!</h1>
-<div sec:authorize="!isAuthenticated()">
-<p>Click <a th:href="@{/auth/facebook?scope=email}">here</a> to login with facebook.</p>
-<p>Click <a th:href="@{/auth/google?scope=email&amp;redirect_uri=http://localhost:8080/signup}">here</a> to login with google.</p>
-</div>
-<div sec:authorize="isAuthenticated()">Estas logueado
-<div social:connected="github">
-Estas conectado con Github
-</div>
-<div social:connected="google">
-Estas conectado con Google
-</div>
-<div social:connected="facebook">
-Estas conectado con Facebook
-</div>
-<div social:connected="trello">
-Estas conectado con Trello
-</div>
-<form th:action="@{connect/trello}" method="POST">
-<button social:notconnected="trello" type="submit">Conectar con Trello</button>
-</form>
-<form social:notconnected="github" th:action="@{connect/github}" method="POST">
-<button type="submit">Conectar con Github</button>
-</form>
-</div>
+	<header th:include="base :: header"> </header>
+	<div sec:authorize="!isAuthenticated()" id="main">
+		<div id="hello">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2 centered">
+						<h1>How...</h1>
+						<h2 th:text="#{web.main.subtitle}">MEASURE YOUR ACTIVITY ON
+							CLOUD</h2>
+					</div>
+					<!-- /col-lg-8 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /hello -->
+
+		<div id="green">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 centered">
+						<img th:src="@{static/img/iphone.png}" src="assets/img/iphone.png"
+							alt=""></img>
+					</div>
+
+					<div class="col-lg-7 centered">
+						<h3 th:text="#{web.main.work.title}">WHAT YOU CAN DO?</h3>
+						<p th:text="#{web.main.work.description}">Con HOW podras
+							obtener una serie de valores con las que obtendras
+							informaci&oacute;n sobre tu actividad en la nube.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row centered mt grid">
+				<h3 th:text="#{web.main.apps}">YOU CAN MEASURE...</h3>
+				<div class="mt"></div>
+				<div class="col-lg-6">
+					<a href="#"><img th:src="@{static/img/github.jpg}"
+						src="assets/img/github.jpg" alt=""></img></a>
+				</div>
+				<div class="col-lg-6">
+					<a href="#"><img th:src="@{static/img/trello.png}"
+						src="assets/img/trello.png" alt=""></img></a>
+				</div>
+			</div>
+
+			<div class="row mt centered">
+				<div class="col-lg-7 col-lg-offset-1 mt">
+					<p th:text="#{web.main.feedback}" class="lead">Por ahora solo
+						estamos integrados con estas aplicaciones, muy pronto dispondremos
+						de mas. Si desea sugerirnos alguna en particular envianosla por
+						correo. El unico requisito es que disponga de una API publica.</p>
+				</div>
+
+				<div class="col-lg-3 mt">
+					<p>
+						<button th:text="#{web.main.feedback.email}" type="button"
+							class="btn btn-theme btn-lg">Email Me!</button>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<section id="contact"></section>
+		<div id="social">
+			<div class="container">
+				<div class="row centered">
+					<div class="col-lg-8 col-lg-offset-2">
+						<div class="col-md-3">
+							<a href="#"><i class="fa fa-facebook"></i></a>
+						</div>
+						<div class="col-md-3">
+							<a href="#"><i class="fa fa-dribbble"></i></a>
+						</div>
+						<div class="col-md-3">
+							<a href="#"><i class="fa fa-twitter"></i></a>
+						</div>
+						<div class="col-md-3">
+							<a href="#"><i class="fa fa-envelope"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /social -->
+	</div>
+	<div sec:authorize="isAuthenticated()" id="main-auth">
+		<div class="container">
+			<div class="row centered mt grid">
+				<div class="col-lg-4 col-lg-offset-2">
+					<div class="thumbnail">
+						<a href="https://github.com/"><img
+							th:src="@{static/img/github.jpg}" src="assets/img/github.jpg"
+							alt="GITHUB"></img></a>
+						<div class="caption">
+							<h4>GitHub</h4>
+							<p>GitHub es una forja para alojar proyectos utilizando el
+								sistema de control de versiones Git.</p>
+							<form social:notconnected="github" th:action="@{connect/github}"
+								method="POST">
+								<button class="btn btn-block btn-social btn-github"
+									type="submit">
+									<i class="fa fa-github"></i>Conectar con Github
+								</button>
+							</form>
+							<form social:connected="github" th:action="@{connect/github}"
+								method="POST">
+								<input type="hidden" name="_method" value="DELETE"></input>
+								<button class="btn btn-block btn-social btn-github"
+									type="submit">
+									<i class="fa fa-github"></i>Desconectar de Github
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="thumbnail">
+						<a href="https://trello.com/"><img
+							th:src="@{static/img/trello.png}" src="assets/img/trello.png"
+							alt="TRELLO"></img></a>
+						<div class="caption">
+							<h4>Trello</h4>
+							<p>Trello es una aplicación web que te permite gestionar
+								proyectos y tareas con el metodo Kanban.</p>
+							<form th:action="@{connect/trello}" method="POST"
+								social:notconnected="trello">
+								<button class="btn btn-block btn-social btn-trello"
+									type="submit">
+									<i class="fa fa-trello"></i>Conectar con Trello
+								</button>
+							</form>
+							<form th:action="@{connect/trello}" method="POST"
+								social:connected="trello">
+								<input type="hidden" name="_method" value="DELETE"></input>
+								<button class="btn btn-block btn-social btn-trello"
+									type="submit">
+									<i class="fa fa-trello"></i>Desconectar de Trello
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:include="base :: footer"> </footer>
 </body>
 </html>

@@ -37,21 +37,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //Configures form login
-                .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/login/authenticate")
-                    .failureUrl("/login?error=bad_credentials")
-                //Configures the logout function
-                .and()
+        		//Configures the rememberMe
                 .rememberMe()
                 .key("6772b7939386362af7ed96915")
                 .rememberMeServices(persistentTokenBasedRememberMeServices())
+                //Configures the logout function
                 .and()
                     .logout()
                         .deleteCookies("JSESSIONID")
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessUrl("/")
                 //Configures url based authorization
                 .and()
                     .authorizeRequests()
@@ -59,12 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         .antMatchers(
                                 "/auth/**",
                                 "/connect/**",
-                                "/login",
                                 "/signin/**",
                                 "/signup/**",
                                 "/user/register/**",
                                 "/",
-                                "/main"
+                                "/main",
+                                "/static/**",
+                                "/webjars/**"
                         ).permitAll()
                         //The rest of the our application is protected.
                         .antMatchers("/**").hasRole("USER")

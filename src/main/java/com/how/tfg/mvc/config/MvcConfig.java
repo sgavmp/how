@@ -1,7 +1,14 @@
 package com.how.tfg.mvc.config;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
@@ -12,12 +19,20 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.i18n.AbstractLocaleContextResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
 
+import com.how.tfg.mvc.ModConnectController;
 import com.how.tfg.social.SpringSocialDialectExtended;
 
 /**
@@ -30,15 +45,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/main").setViewName("greeting");
-        registry.addViewController("/login").setViewName("login");
     }
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //    	registry.addResourceHandler("/static/**").addResourceLocations("/static/").setCachePeriod(31556926);
     	registry.addResourceHandler("/static/**").addResourceLocations("WEB-INF/static/");
-    	registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
+    	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
     
     @Bean
@@ -70,7 +83,17 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     
     @Bean
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
-        return new ConnectController(connectionFactoryLocator, connectionRepository);
+        return new ModConnectController(connectionFactoryLocator, connectionRepository);
     }
+    
+    @Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasenames("messages");
+		messageSource.setDefaultEncoding("utf-8");
+//		messageSource.setCacheSeconds(this.environment.getProperty("cacheSeconds",
+//				Integer.class, -1));
+		return messageSource;
+	}
     
 }
