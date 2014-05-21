@@ -11,49 +11,9 @@ spring:
       show-sql: true
   profiles:
     active: dev
-
-facebook:
-  app:
-    id: 493696467441204
-    secret: 4e00271c22d5505f0b701dd5841e3b96
-    scope: email
-google:
-  app:
-    id: 167639965382-mla3s2s5q4gddp9f03lvf8t02oem4r34.apps.googleusercontent.com
-    secret: e18Ib5XFcfb9pQxFyoE8cIno
-trello:
-  app:
-    id: c0e203c611f368e0ba71cfadbe05a909
-    secret: b0162b7e9d1939386870ed3941e157b086006f38362af7a7f842f3661ed96915
-github:
-  app:
-    id: 1796f8e2de6f5c9882e5
-    secret: 6af3d5c2d7e68c689baf0ff54de1f1d8d9f8b126
     
-name: defecto
----
-spring:
-  profiles: dev
 name: dev
 ---
 spring:
   profiles: prod
 name: prod
-
-facebook:
-  app:
-    id: 247938578731313
-    secret: 52b72b8ba67c37c27443947eb651592c
-    scope: email
-google:
-  app:
-    id: 784957942335-75pu9toqpspinsnrso1aalolugbt1620.apps.googleusercontent.com
-    secret: dBM4xdvvSPlVmHj7olPQL5T_
-trello:
-  app:
-    id: c0e203c611f368e0ba71cfadbe05a909
-    secret: b0162b7e9d1939386870ed3941e157b086006f38362af7a7f842f3661ed96915
-github:
-  app:
-    id: 6ecfb9111c9d2e0263b4
-    secret: 318a1602f314812176f1552bc9a9369f3c3d4346
