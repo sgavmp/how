@@ -33,6 +33,7 @@ repositories {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion",
     		"org.springframework.boot:spring-boot-starter-security:$springBootVersion",
+    		"org.springframework.boot:spring-boot-starter-test:$springBootVersion",
             "org.springframework.social:spring-social-config:$springSocialVersion",
             "org.springframework.social:spring-social-security:$springSocialVersion",
             "org.springframework.social:spring-social-facebook:$springSocialVersion",

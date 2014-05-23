@@ -45,6 +45,11 @@ public class MainController {
         return "home";
     }
     
+    @RequestMapping(value="/apps", method=RequestMethod.GET)
+    public String apps(WebRequest request, Model model) {
+        return "apps";
+    }
+    
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String redirectRequestToRegistrationPageFacebook() {
         return "redirect:/user/register";
