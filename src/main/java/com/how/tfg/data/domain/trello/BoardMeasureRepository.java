@@ -1,11 +1,9 @@
-package com.how.tfg.data.repository;
+package com.how.tfg.data.domain.trello;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-
-import com.how.tfg.data.domain.trello.BoardMeasure;
 
 public interface BoardMeasureRepository extends MongoRepository<BoardMeasure, String> {
 	
