@@ -15,5 +15,5 @@ spring:
 name: dev
 ---
 spring:
-  profiles: prod
-name: prod
+  profiles: heroku
+name: heroku

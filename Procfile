@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar build/libs/how-tfg.jar --spring.profiles.active=prod
+web: java $JAVA_OPTS -jar build/libs/how-tfg.jar --spring.profiles.active=heroku
