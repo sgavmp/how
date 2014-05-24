@@ -2,6 +2,7 @@ package com.how.tfg;
 
 import javax.sql.DataSource;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -29,6 +30,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.how.tfg.data.domain.User;
 import com.how.tfg.data.domain.enumerate.Role;
+import com.how.tfg.data.domain.trello.BoardMeasure;
+import com.how.tfg.data.repository.BoardMeasureRepository;
 import com.how.tfg.data.repository.UserRepository;
 
 @Configuration
@@ -37,8 +40,8 @@ import com.how.tfg.data.repository.UserRepository;
 public class Application implements CommandLineRunner{
 	
     
-	@Autowired
-	UserRepository repository;
+//	@Autowired
+//	BoardMeasureRepository repository;
 	
 	@Autowired
 	Environment env;
@@ -54,7 +57,13 @@ public class Application implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-    	System.out.println(env.getProperty("name"));
+    	System.out.println("Deploy on " + env.getProperty("name"));
+//    	BoardMeasure trello = new BoardMeasure();
+//    	trello.setEmail("sga.vmp@gmail.com");
+//    	trello.setDateCreation(DateTime.now());
+//    	trello.setName("Nombre del tablero");
+//    	trello.setBoardId("asda3radfa3f323asdf");
+//    	repository.save(trello);
     }
 
 }

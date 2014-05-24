@@ -20,11 +20,7 @@
 				<div class="col-lg-10 bhoechie-tab">
 					<!-- flight section -->
 					<div class="bhoechie-tab-content active">
-						<center>
-							<h1 class="fa fa-trello" style="font-size: 14em; color: #55518a"></h1>
-							<h2 style="margin-top: 0; color: #55518a">Cooming Soon</h2>
-							<h3 style="margin-top: 0; color: #55518a">Flight Reservation</h3>
-						</center>
+						<a th:each="board : ${boards}" th:href="@{/apps/trello/board/${board.name}}" th:text="${board.name}">Nombre tablero</a>
 					</div>
 					<!-- train section -->
 					<div class="bhoechie-tab-content">

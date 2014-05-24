@@ -18,7 +18,7 @@ target/
 # Gradle
 ###################### 
 .gradle/
-.settings/
+.gradle/**
 
 ######################
 # Windows
@@ -61,6 +61,7 @@ tmp/**/*
 *~.nib
 local.properties
 .classpath
+.settings/**
 .settings/
 .loadpath
 /src/main/resources/rebel.xml
