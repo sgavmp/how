@@ -34,13 +34,13 @@ public class MainController {
         this.service = service;
     }
     
-    @RequestMapping(value="/", method=RequestMethod.GET, params={"provider","event"})
+    @RequestMapping(value={"","/"}, method=RequestMethod.GET, params={"provider","event"})
     public String homeEvent(WebRequest request, @RequestParam(value="provider") String providerId, @RequestParam(value="event") String event, Model model) {
         model.addAttribute("info", "web.messages." + providerId + "." + event);
         return "home";
     }
     
-    @RequestMapping(value="/", method=RequestMethod.GET)
+    @RequestMapping(value={"","/"}, method=RequestMethod.GET)
     public String home(WebRequest request, Model model) {
         return "home";
     }
