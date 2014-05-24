@@ -4,15 +4,18 @@ spring:
     username: tfg
     password: tfg
     driverClassName: org.postgresql.Driver
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/how
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
       show-sql: true
   profiles:
-    active: dev
+   active: local
     
-name: dev
+name: local
 ---
 spring:
   profiles: heroku
