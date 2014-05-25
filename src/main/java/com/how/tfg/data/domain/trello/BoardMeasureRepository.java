@@ -8,5 +8,6 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 public interface BoardMeasureRepository extends MongoRepository<BoardMeasure, String> {
 	
 	public List<BoardMeasure> getByEmail(String email);
+	public List<BoardMeasure> getByEmailAndBoardId(String email,String boardId);
 
 }
