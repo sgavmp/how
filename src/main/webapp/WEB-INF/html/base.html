@@ -17,10 +17,6 @@
     <link th:href="@{/static/css/bootstrap-social.css}" href="assets/css/bootstrap-social.css" rel="stylesheet"></link>
     <link th:href="@{/webjars/font-awesome/4.1.0/css/font-awesome.min.css}" href="assets/css/font-awesome.min.css" rel="stylesheet"></link>
 
-    <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script th:src="@{/webjars/chartjs/26962ce/Chart.min.js}" src="assets/js/chart.js"></script>
-
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -42,9 +38,13 @@
 	          <a class="navbar-brand" href="/"></a>
 	        </div>
 	        <div class="navbar-collapse collapse">
+	          <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-center">
+	            <li th:class="((${menu}=='apps')?'active')"><a th:href="@{/}" href="/">Apps</a></li>
+	            <li th:class="((${menu}=='measure')?'active')"><a th:href="@{/measure/}" href="/measure">Measure</a></li>
+	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
-	            <li sec:authorize="!isAuthenticated()" class="active"><a href="#login" data-toggle="modal" data-target="#loginModal">Login</a></li>
-	            <li sec:authorize="isAuthenticated()" class="active"><a th:href="@{/logout}" href="logout">Logout</a></li>
+	            <li sec:authorize="!isAuthenticated()"><a href="#login" data-toggle="modal" data-target="#loginModal">Login</a></li>
+	            <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" href="logout">Logout</a></li>
 	          </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>
@@ -102,7 +102,11 @@
 	    <!-- Bootstrap core JavaScript
 	    ================================================== -->
 	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	    <script th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
+    	<script th:src="@{/webjars/chartjs/26962ce/Chart.min.js}" src="assets/js/chart.js"></script>
+    	<script th:src="@{/webjars/highcharts/3.0.9/highcharts.js}"></script>
+    	<script th:src="@{/webjars/highcharts/3.0.9/highcharts-more.js}"></script>
     </footer>
   </body>
 </html>

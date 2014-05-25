@@ -4,7 +4,7 @@
 </head>
 <body>
 	<header th:include="base :: header"> </header>
-	<div sec:authorize="!isAuthenticated()" id="main">
+	<main sec:authorize="!isAuthenticated()" id="main">
 		<div id="hello">
 			<div class="container">
 				<div class="row">
@@ -93,14 +93,17 @@
 			<!-- /container -->
 		</div>
 		<!-- /social -->
-	</div>
-	<div sec:authorize="isAuthenticated()" id="main-auth">
+	</main>
+	<main sec:authorize="isAuthenticated()" id="main-auth">
 		<div class="container">
 			<div class="row centered mt grid">
 				<div class="col-lg-4 col-lg-offset-2">
 					<div class="thumbnail">
-						<a href="https://github.com/"><img
-							th:src="@{static/img/github.jpg}" src="assets/img/github.jpg"
+						<a social:connected="github" th:href="@{/measure/github}" href="https://github.com/">
+						<img th:src="@{static/img/github.jpg}" src="assets/img/github.jpg"
+							alt="GITHUB"></img></a>
+						<a social:notconnected="github" href="https://github.com/">
+						<img th:src="@{static/img/github.jpg}" src="assets/img/github.jpg"
 							alt="GITHUB"></img></a>
 						<div class="caption">
 							<h4>GitHub</h4>
@@ -126,7 +129,10 @@
 				</div>
 				<div class="col-lg-4">
 					<div class="thumbnail">
-						<a href="https://trello.com/"><img
+						<a social:connected="trello" th:href="@{/measure/trello}" href="https://trello.com/"><img
+							th:src="@{static/img/trello.png}" src="assets/img/trello.png"
+							alt="TRELLO"></img></a>
+						<a social:notconnected="trello" href="https://trello.com/"><img
 							th:src="@{static/img/trello.png}" src="assets/img/trello.png"
 							alt="TRELLO"></img></a>
 						<div class="caption">
@@ -153,7 +159,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</main>
 	<footer th:include="base :: footer"> </footer>
 </body>
 </html>
