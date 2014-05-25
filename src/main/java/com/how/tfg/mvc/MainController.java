@@ -8,6 +8,7 @@ import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,11 @@ public class MainController {
         this.service = service;
     }
     
+    @ModelAttribute("menu")
+	public String getMenuOpt(){
+		return "apps";
+	}
+    
     @RequestMapping(value={"","/"}, method=RequestMethod.GET, params={"provider","event"})
     public String homeEvent(WebRequest request, @RequestParam(value="provider") String providerId, @RequestParam(value="event") String event, Model model) {
         model.addAttribute("info", "web.messages." + providerId + "." + event);
@@ -43,11 +49,6 @@ public class MainController {
     @RequestMapping(value={"","/"}, method=RequestMethod.GET)
     public String home(WebRequest request, Model model) {
         return "home";
-    }
-    
-    @RequestMapping(value="/apps", method=RequestMethod.GET)
-    public String apps(WebRequest request, Model model) {
-        return "apps";
     }
     
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
