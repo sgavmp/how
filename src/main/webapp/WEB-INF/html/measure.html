@@ -198,7 +198,7 @@
 	
 			            series: []
 			        };
-                    $.getJSON([[@{'http://localhost:8080/measure/trello/data/'+ ${measure.id}+'/json'}]], function(data) {
+                    $.getJSON([[@{'/measure/trello/data/'+ ${measure.id}+'/json'}]], function(data) {
                     	 $.each(data, function(key,value) {
                              var series = { data: []};
                              $.each(value, function(key,val) {
@@ -262,7 +262,7 @@
 	
 			            series: []
 			        };
-                    $.getJSON([[@{'http://localhost:8080/measure/github/data/'+ ${measure.id}+'/json'}]], function(data) {
+                    $.getJSON([[@{'/measure/github/data/'+ ${measure.id}+'/json'}]], function(data) {
                     	 $.each(data, function(key,value) {
                              var series = { data: []};
                              $.each(value, function(key,val) {
