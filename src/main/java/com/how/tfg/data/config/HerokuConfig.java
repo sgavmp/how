@@ -20,7 +20,7 @@ public class HerokuConfig extends AbstractCloudConfig  {
 	}
 	
 	@Bean
-	public MongoDbFactory getMongoHeroku() {
+	public MongoDbFactory mongoDbFactory() {
 		return connectionFactory().mongoDbFactory();
 	}
 
