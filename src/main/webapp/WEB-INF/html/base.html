@@ -40,7 +40,6 @@
 	        <div class="navbar-collapse collapse">
 	          <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-center">
 	            <li th:class="((${menu}=='apps')?'active')"><a th:href="@{/}" href="/">Apps</a></li>
-	            <li th:class="((${menu}=='measure')?'active')"><a th:href="@{/measure/}" href="/measure">Measure</a></li>
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
 	            <li sec:authorize="!isAuthenticated()"><a href="#login" data-toggle="modal" data-target="#loginModal">Login</a></li>

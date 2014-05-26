@@ -11,13 +11,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.how.tfg.data.modules.trello.repository.BoardMeasureRepository;
+import com.how.tfg.modules.trello.repository.BoardMeasureRepository;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration(exclude=ThymeleafAutoConfiguration.class)
 @EnableJpaRepositories("com.how.tfg.data.repository")
-@EnableMongoRepositories("com.how.tfg.data.modules")
+@EnableMongoRepositories("com.how.tfg.modules")
 public class Application implements CommandLineRunner{
 	
     

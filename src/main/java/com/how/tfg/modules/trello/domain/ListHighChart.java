@@ -1,4 +1,4 @@
-package com.how.tfg.data.modules.trello.domain;
+package com.how.tfg.modules.trello.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.how.tfg.data.modules.github.domain;
+package com.how.tfg.modules.github.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;

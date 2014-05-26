@@ -97,6 +97,9 @@
 	<main sec:authorize="isAuthenticated()" id="main-auth">
 		<div class="container">
 			<div class="row centered mt grid">
+				<p>Para acceder a la medida de cada aplicación pulse sobre el logo una vez conectes la cuenta.</p>
+			</div>
+			<div class="row centered mt grid">
 				<div class="col-lg-4 col-lg-offset-2">
 					<div class="thumbnail">
 						<a social:connected="github" th:href="@{/measure/github}" href="https://github.com/">

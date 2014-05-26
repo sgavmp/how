@@ -1,4 +1,4 @@
-package com.how.tfg.data.modules.trello.services;
+package com.how.tfg.modules.trello.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.stereotype.Service;
 
-import com.how.tfg.data.modules.trello.domain.BoardMeasure;
-import com.how.tfg.data.modules.trello.repository.BoardMeasureRepository;
+import com.how.tfg.modules.trello.domain.BoardMeasure;
+import com.how.tfg.modules.trello.repository.BoardMeasureRepository;
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.Argument;
@@ -27,8 +27,6 @@ public class TrelloService {
 	private ConnectionRepository connectionRepository;
 	
 	private BoardMeasureRepository repository;
-	
-	private Trello trello;
 
 	@Autowired
     public TrelloService(ConnectionRepository connectionRepository,BoardMeasureRepository repository) {
@@ -42,9 +40,7 @@ public class TrelloService {
 	
 	@SuppressWarnings("unchecked")
 	public Trello getApi() {
-		if (trello==null)
-			trello = ((Connection<Trello>) connectionRepository.findConnections("trello").get(0)).getApi();
-		return trello;
+		return ((Connection<Trello>) connectionRepository.findConnections("trello").get(0)).getApi();
 	}
 	
 	public List<BoardMeasure> getAllMeasure() {
@@ -66,7 +62,7 @@ public class TrelloService {
     }
     
     public List<TList> getAllListOfBoardId(String boardId) {
-    	return trello.getBoardLists(boardId, new Argument("cards","all"));
+    	return getApi().getBoardLists(boardId, new Argument("cards","all"));
     }
     
     public boolean notExistBoardMeasure(String boardId) {
@@ -74,8 +70,8 @@ public class TrelloService {
     }
     
     public BoardMeasure createMeasureOfBoardId(String boardId) {
-    	Board board = trello.getBoard(boardId, new Argument("",""));
-    	List<TList> listas = trello.getBoardLists(boardId, new Argument("cards","all"));
+    	Board board = getApi().getBoard(boardId, new Argument("",""));
+    	List<TList> listas = getApi().getBoardLists(boardId, new Argument("cards","all"));
     	BoardMeasure measure = new BoardMeasure();
     	measure.setBoardId(boardId);
     	measure.setName(board.getName());
@@ -120,8 +116,8 @@ public class TrelloService {
     
     public BoardMeasure refreshMeasure(String measureId) {
     	BoardMeasure measure = repository.findOne(measureId);
-    	Board board = trello.getBoard(measure.getBoardId(), new Argument("",""));
-    	List<TList> listas = trello.getBoardLists(measure.getBoardId(), new Argument("cards","all"));
+    	Board board = getApi().getBoard(measure.getBoardId(), new Argument("",""));
+    	List<TList> listas = getApi().getBoardLists(measure.getBoardId(), new Argument("cards","all"));
     	measure.setName(board.getName());
     	measure.setUpdateCreation(DateTime.now());
     	Map<String, Map<Long,Integer>> numCardsForList = new TreeMap<String,Map<Long,Integer>>();

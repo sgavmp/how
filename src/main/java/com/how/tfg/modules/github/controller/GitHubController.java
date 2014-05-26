@@ -1,4 +1,4 @@
-package com.how.tfg.mvc.modules.github;
+package com.how.tfg.modules.github.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.how.tfg.data.modules.github.domain.CommitHighChart;
-import com.how.tfg.data.modules.github.domain.GithubMeasure;
-import com.how.tfg.data.modules.github.services.GitHubService;
+import com.how.tfg.modules.github.domain.CommitHighChart;
+import com.how.tfg.modules.github.domain.GithubMeasure;
+import com.how.tfg.modules.github.services.GitHubService;
 
 @Controller
 @RequestMapping("/measure/github")

@@ -1,4 +1,4 @@
-package com.how.tfg.data.modules.github.services;
+package com.how.tfg.modules.github.services;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,8 +20,8 @@ import org.springframework.social.github.api.GitHubStatsParticipation;
 import org.springframework.social.github.api.GitHubUserProfile;
 import org.springframework.stereotype.Service;
 
-import com.how.tfg.data.modules.github.domain.GithubMeasure;
-import com.how.tfg.data.modules.github.repository.GithubMeasureRepository;
+import com.how.tfg.modules.github.domain.GithubMeasure;
+import com.how.tfg.modules.github.repository.GithubMeasureRepository;
 
 @Service
 public class GitHubService {
@@ -29,10 +29,6 @@ public class GitHubService {
 	private GithubMeasureRepository repository;
 	
 	private ConnectionRepository connectionRepository;
-	
-	private GitHub github;
-	
-	private String login;
 
 	@Autowired
     public GitHubService(GithubMeasureRepository repository, ConnectionRepository connectionRepository) {
@@ -46,22 +42,12 @@ public class GitHubService {
 	
 	@SuppressWarnings("unchecked")
 	public GitHub getApi() {
-		if (github==null) {
-			Connection<GitHub> conect = (Connection<GitHub>) connectionRepository.findConnections("github").get(0);
-			login =conect.getDisplayName();
-			github = conect.getApi();
-		}
-		return github;
+		return ((Connection<GitHub>) connectionRepository.findConnections("github").get(0)).getApi();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public String getLogin() {
-		if (login==null) {
-			Connection<GitHub> conect = (Connection<GitHub>) connectionRepository.findConnections("github").get(0);
-			login =conect.getDisplayName();
-			github = conect.getApi();
-		}
-		return login;
+		return ((Connection<GitHub>) connectionRepository.findConnections("github").get(0)).getDisplayName();
 	}
 	
 	public GitHubUserProfile getMeProfile() {
@@ -91,7 +77,7 @@ public class GitHubService {
 	}
 
 	public void createMeasureOfRepodId(String repoName) {
-		GitHubRepo repo = github.repoOperations().getRepo(getLogin(), repoName);
+		GitHubRepo repo = getApi().repoOperations().getRepo(getLogin(), repoName);
 		GithubMeasure measure = new GithubMeasure();
 		measure.setRepoId(repo.getId().toString());
 		measure.setRepoName(repo.getName());
@@ -141,19 +127,19 @@ public class GitHubService {
 	}
 	
 	public List<GitHubIssue> getAllIssuesForRepository(String name) {
-		return github.repoOperations().getIssues(getLogin(), name);
+		return getApi().repoOperations().getIssues(getLogin(), name);
 	}
 	
 	public List<GitHubCommit> getAllCommitForRepository(String name) {
-		return github.repoOperations().getCommits(getLogin(), name);
+		return getApi().repoOperations().getCommits(getLogin(), name);
 	}
 	
 	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name) {
-		return github.statsOperations().getCommitActivity(user, name);
+		return getApi().statsOperations().getCommitActivity(user, name);
 	}
 	
 	public GitHubStatsParticipation getStatsParticipation(String user, String name) {
-		return github.statsOperations().getParticipation(user, name);
+		return getApi().statsOperations().getParticipation(user, name);
 	}
 
 	public GithubMeasure getBoardMeasureById(String measureid) {

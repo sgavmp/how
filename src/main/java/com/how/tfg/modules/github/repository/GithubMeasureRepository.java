@@ -1,4 +1,4 @@
-package com.how.tfg.data.modules.github.repository;
+package com.how.tfg.modules.github.repository;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.social.connect.Connection;
 
-import com.how.tfg.data.modules.github.domain.GithubMeasure;
+import com.how.tfg.modules.github.domain.GithubMeasure;
 
 public interface GithubMeasureRepository extends MongoRepository<GithubMeasure, String> {
 	

@@ -1,4 +1,4 @@
-package com.how.tfg.mvc.modules.trello;
+package com.how.tfg.modules.trello.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.how.tfg.data.modules.trello.domain.BoardMeasure;
-import com.how.tfg.data.modules.trello.domain.ListHighChart;
-import com.how.tfg.data.modules.trello.services.TrelloService;
+import com.how.tfg.modules.trello.domain.BoardMeasure;
+import com.how.tfg.modules.trello.domain.ListHighChart;
+import com.how.tfg.modules.trello.services.TrelloService;
 import com.julienvey.trello.domain.Board;
 
 @Controller
