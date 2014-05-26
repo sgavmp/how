@@ -15,9 +15,6 @@ import com.how.tfg.data.repository.UserRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 public class UserTest {
-
-	@Autowired
-	UserRepository userRepository;
 	
 	@Test
 	public void createUserCorrect(){
