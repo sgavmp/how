@@ -63,6 +63,7 @@ dependencies {
     compile("mysql:mysql-connector-java:5.1.30")
     
     testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 }
 
 task stage(dependsOn: ['build'])
