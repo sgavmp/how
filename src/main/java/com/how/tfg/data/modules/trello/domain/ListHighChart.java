@@ -1,8 +1,9 @@
-package com.how.tfg.data.domain.trello;
+package com.how.tfg.data.modules.trello.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
@@ -25,22 +26,24 @@ public class ListHighChart {
 		super();
 	}
 	
-	public ListHighChart(String name, List<CardsOfDay> cards) {
+	public ListHighChart(String name, Map<Long,Integer> cards) {
 		this.name = name;
 		data = new ArrayList<>();
-		for (CardsOfDay card : cards) {
+		DateTime date = null;
+		for (Long day : cards.keySet()) {
 			List<String> temp = new ArrayList<String>();
-			temp.add(card.getTime().getYear()+","+(card.getTime().getMonthOfYear()-1)+","+card.getTime().getDayOfMonth()+","+card.getTime().getHourOfDay()+","+card.getTime().getMinuteOfHour());
-			temp.add(card.getNum().toString());
+			date = new DateTime(day);
+			temp.add(date.getYear()+","+(date.getMonthOfYear()-1)+","+date.getDayOfMonth());
+			temp.add(cards.get(day).toString());
 			data.add(temp);
 		}
 		DateTime now = DateTime.now();
-		Integer numNow = cards.get(0).getNum();
+		Integer numNow = cards.get(date.getMillis());
 		List<String> temp = new ArrayList<String>();
-		temp.add(now.getYear()+","+(now.getMonthOfYear()-1)+","+now.getDayOfMonth()+","+now.getHourOfDay()+","+now.getMinuteOfHour());
+		temp.add(now.getYear()+","+(now.getMonthOfYear()-1)+","+now.getDayOfMonth());
 		temp.add(numNow.toString());
-		Collections.reverse(data);
 		data.add(temp);
+//		Collections.reverse(data);
 		color = colors[aColor++];
 		if (aColor==maxColor)
 			aColor=0;

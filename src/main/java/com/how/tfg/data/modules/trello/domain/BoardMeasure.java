@@ -1,4 +1,4 @@
-package com.how.tfg.data.domain.trello;
+package com.how.tfg.data.modules.trello.domain;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +28,7 @@ public class BoardMeasure {
 	private DateTime updateCreation;
 	private String email;
 	private Map<String, String> listName;
-	private Map<String, List<CardsOfDay>> taskForList;
+	private Map<String, Map<Long,Integer>> taskForList;
 
 	public BoardMeasure() {
 
@@ -74,11 +74,11 @@ public class BoardMeasure {
 		this.email = email;
 	}
 
-	public Map<String, List<CardsOfDay>> getTaskForList() {
+	public Map<String, Map<Long, Integer>> getTaskForList() {
 		return taskForList;
 	}
 
-	public void setTaskForList(Map<String, List<CardsOfDay>> taskForList) {
+	public void setTaskForList(Map<String, Map<Long, Integer>> taskForList) {
 		this.taskForList = taskForList;
 	}
 	

@@ -1,36 +1,26 @@
-package com.how.tfg.mvc;
+package com.how.tfg.mvc.modules.trello;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.how.tfg.data.domain.trello.BoardMeasure;
-import com.how.tfg.data.domain.trello.CardsOfDay;
-import com.how.tfg.data.domain.trello.ListHighChart;
-import com.how.tfg.data.services.TrelloService;
-import com.how.tfg.social.UserService;
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.Argument;
+import com.how.tfg.data.modules.trello.domain.BoardMeasure;
+import com.how.tfg.data.modules.trello.domain.ListHighChart;
+import com.how.tfg.data.modules.trello.services.TrelloService;
 import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.TList;
 
 @Controller
 @RequestMapping("/measure/trello")
@@ -64,36 +54,51 @@ public class TrelloController {
 	}
 	
 	@RequestMapping({"","/"})
-	public String boards(WebRequest request, Model model) {
-		return "measure";
+	public String boards(WebRequest request, Model model, RedirectAttributes redirectAttributes) {
+		if (trello.haveConnection())
+			return "measure";
+		redirectAttributes.addFlashAttribute("error", "web.trello.noconnection");
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/create/board/{boardid}")
-	public String createMeasure(WebRequest request, Model model,@PathVariable("boardid") String boardId) {
-		if (trello.notExistBoardMeasure(boardId))
+	public String createMeasure(WebRequest request, Model model,@PathVariable("boardid") String boardId, RedirectAttributes redirectAttributes) {
+		model.asMap().clear();
+		if (trello.notExistBoardMeasure(boardId)) {
 			trello.createMeasureOfBoardId(boardId);
+			redirectAttributes.addFlashAttribute("info", "web.measure.create");
+		}
+		else {
+			redirectAttributes.addFlashAttribute("error", "web.measure.exist");
+		}
+		return "redirect:/measure/trello";
+	}
+	
+	@RequestMapping("/refresh/measure/{measureId}")
+	public String refreshMeasure(WebRequest request, Model model,@PathVariable("measureId") String measureId, RedirectAttributes redirectAttributes) {
+		trello.refreshMeasure(measureId);
+		model.asMap().clear();
+		redirectAttributes.addFlashAttribute("info", "web.measure.refresh");
 		return "redirect:/measure/trello";
 	}
 	
 	@RequestMapping("/delete/{measureid}")
-	public String deleteMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid) {
+	public String deleteMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid, RedirectAttributes redirectAttributes) {
 		trello.deleteMeasureOfId(measureid);
+		model.asMap().clear();
+		redirectAttributes.addFlashAttribute("info", "web.measure.delete");
 		return "redirect:/measure/trello";
 	}
 	
 	@RequestMapping("/data/{measureid}/json")
 	public @ResponseBody List<ListHighChart> getDataOfMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid) {
 		BoardMeasure measure = trello.getBoardMeasureById(measureid);
-		Map<String,List<CardsOfDay>> temp = measure.getTaskForList();
+		Map<String,Map<Long,Integer>> temp = measure.getTaskForList();
 		List<ListHighChart> listas = new ArrayList<ListHighChart>();
 		for (String key : temp.keySet()) {
 			listas.add(new ListHighChart(measure.getListName().get(key), temp.get(key)));
 		}
 		return listas;
 	}
-	
-	@RequestMapping(value="/webhook/{measureId}")
-	public void getWebhookAction(@PathVariable("measureId") String measureId,@RequestParam("action") Action action) {
-		
-	}
+
 }
