@@ -4,9 +4,6 @@ spring:
     username: tfg
     password: tfg
     driverClassName: org.postgresql.Driver
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/how
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
