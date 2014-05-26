@@ -90,7 +90,7 @@
 		      <div class="modal-body">
 		        <h5 th:text="#{web.main.login.modal.text}">Puedes iniciar sesión con cualquier de los dos servicios online. Las cuentas se asocian por el correo electronico, así que si tienes el mismo correo en ambas cuentas podras iniciar sesión con ambas indistintamente.</h5>
 		        <a class="btn btn-block btn-social btn-facebook" th:href="@{/auth/facebook?scope=email}" th:utext="#{web.main.login.modal.facebook}"><i class="fa fa-facebook"></i> Sign in with Facebook</a>
-				<a class="btn btn-block btn-social btn-google-plus" th:href="@{/auth/google?scope=email&amp;redirect_uri=http://localhost:8080/signup}" th:utext="#{web.main.login.modal.google}"><i class="fa fa-google"></i> Sign in with Google</a>
+				<a class="btn btn-block btn-social btn-google-plus" th:href="@{/auth/google?scope=email&amp;redirect_uri=http://localhost:8080/user/register}" th:utext="#{web.main.login.modal.google}"><i class="fa fa-google"></i> Sign in with Google</a>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{web.main.login.modal.close}">Close</button>

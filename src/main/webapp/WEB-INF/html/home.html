@@ -146,7 +146,7 @@
 									<i class="fa fa-trello"></i>Conectar con Trello
 								</button>
 							</form>
-							<form th:action="@{connect/trello}" method="POST"
+							<form th:action="@{connect/trello?expiration=never}" method="POST"
 								social:connected="trello">
 								<input type="hidden" name="_method" value="DELETE"></input>
 								<button class="btn btn-block btn-social btn-trello"
