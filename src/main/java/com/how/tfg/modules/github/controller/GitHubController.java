@@ -17,26 +17,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.how.tfg.modules.github.domain.CommitHighChart;
 import com.how.tfg.modules.github.domain.GithubMeasure;
 import com.how.tfg.modules.github.services.GitHubService;
+import com.how.tfg.mvc.BaseController;
 
 @Controller
 @RequestMapping("/measure/github")
-public class GitHubController {
+public class GitHubController extends BaseController {
 
 	private GitHubService github;
 	
 	@Autowired
 	public GitHubController(GitHubService github) {
+		this.image="static/img/modules/github.jpg";
+		this.nameApp="GitHub";
+		this.url="https://github.com/";
+		this.code="github";
+		this.description="GitHub es una forja para alojar proyectos utilizando el sistema de control de versiones Git.";
 		this.github = github;
-	}
-	
-	@ModelAttribute("menu")
-	public String getMenuOpt(){
-		return "measure";
-	}
-	
-	@ModelAttribute("app")
-	public String getAppName(){
-		return "github";
 	}
 	
 	@ModelAttribute("repos")

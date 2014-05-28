@@ -1,7 +1,10 @@
 package com.how.tfg.mvc;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.UserProfile;
@@ -29,49 +32,70 @@ import com.how.tfg.social.UserService;
 public class MainController {
 
 	private UserService service;
+	private List<BaseController> allApps;
 
-    @Autowired
-    public MainController(UserService service) {
-        this.service = service;
-    }
-    
-    @ModelAttribute("menu")
-	public String getMenuOpt(){
+	@ModelAttribute("apps")
+	public List<BaseController> getAllApps() {
+		return allApps;
+	}
+
+	@Autowired
+	public void setAllApps(List<BaseController> allApps) {
+		this.allApps = allApps;
+	}
+
+	@Autowired
+	public MainController(UserService service) {
+		this.service = service;
+	}
+
+	@ModelAttribute("menu")
+	public String getMenuOpt() {
 		return "apps";
 	}
-    
-    @RequestMapping(value={"","/"}, method=RequestMethod.GET, params={"provider","event"})
-    public String homeEvent(WebRequest request, @RequestParam(value="provider") String providerId, @RequestParam(value="event") String event, Model model) {
-        model.addAttribute("info", "web.messages." + providerId + "." + event);
-        return "home";
-    }
-    
-    @RequestMapping(value={"","/"}, method=RequestMethod.GET)
-    public String home(WebRequest request, Model model) {
-        return "home";
-    }
-    
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String redirectRequestToRegistrationPageFacebook() {
-        return "redirect:/user/register";
-    }
-    
-    @RequestMapping(value = "/auth/google", method = RequestMethod.POST)
-    public String redirectRequestToRegistrationPageGoogle() {
-        return "redirect:/user/register";
-    }
-    
-    @RequestMapping(value = "/user/register", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
-    	ProviderSignInUtils providerSign = new ProviderSignInUtils();
-        Connection<?> connection = providerSign.getConnectionFromSession(request);
-        
-        User registered = service.registerNewUserAccountOrGet(connection);
 
-        SecurityUtil.logInUser(registered);
-        providerSign.doPostSignUp(registered.getEmail(), request);
+	@ModelAttribute("principal")
+	public Object getUser() {
+		return SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+	}
 
-        return "redirect:/";
-    }
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET, params = {
+			"provider", "event" })
+	public String homeEvent(WebRequest request,
+			@RequestParam(value = "provider") String providerId,
+			@RequestParam(value = "event") String event, Model model) {
+		model.addAttribute("info", "web.messages." + providerId + "." + event);
+		return "home";
+	}
+
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
+	public String home(WebRequest request, Model model) {
+		return "home";
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public String redirectRequestToRegistrationPageFacebook() {
+		return "redirect:/user/register";
+	}
+
+	@RequestMapping(value = "/auth/google", method = RequestMethod.POST)
+	public String redirectRequestToRegistrationPageGoogle() {
+		return "redirect:/user/register";
+	}
+
+	@RequestMapping(value = "/user/register", method = RequestMethod.GET)
+	public String showRegistrationForm(WebRequest request, Model model) {
+		ProviderSignInUtils providerSign = new ProviderSignInUtils();
+		Connection<?> connection = providerSign
+				.getConnectionFromSession(request);
+
+		User registered = service.registerNewUserAccountOrGet(connection);
+
+		SecurityUtil.logInUser(registered);
+		providerSign.doPostSignUp(registered.getEmail(), request);
+
+		return "redirect:/";
+	}
 
 }

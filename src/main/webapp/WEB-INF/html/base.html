@@ -42,6 +42,10 @@
 	            <li th:class="((${menu}=='apps')?'active')"><a th:href="@{/}" href="/">Apps</a></li>
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
+	          	<li sec:authorize="isAuthenticated()" class="profile-name" th:text="${'Hola ' + principal.firstName}"></li>
+	          	<li sec:authorize="isAuthenticated()">
+					<img class="profile-image" th:src="${principal.imageProfile}"></img>
+				</li>
 	            <li sec:authorize="!isAuthenticated()"><a href="#login" data-toggle="modal" data-target="#loginModal">Login</a></li>
 	            <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" href="logout">Logout</a></li>
 	          </ul>

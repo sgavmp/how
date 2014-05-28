@@ -4,7 +4,7 @@
 </head>
 <body>
 	<header th:include="base :: header"> </header>
-	<main sec:authorize="!isAuthenticated()" id="main">
+	<main sec:authorize="!isAuthenticated()" class="container" id="main">
 		<div id="hello">
 			<div class="container">
 				<div class="row">
@@ -43,13 +43,9 @@
 			<div class="row centered mt grid">
 				<h3 th:text="#{web.main.apps}">YOU CAN MEASURE...</h3>
 				<div class="mt"></div>
-				<div class="col-lg-6">
-					<a href="https://github.com/"><img th:src="@{static/img/github.jpg}"
+				<div th:each="app : ${apps}" class="col-lg-6">
+					<a th:href="${app.url}" href="https://github.com/"><img th:src="${app.image}"
 						src="assets/img/github.jpg" alt=""></img></a>
-				</div>
-				<div class="col-lg-6">
-					<a href="https://trello.com/"><img th:src="@{static/img/trello.png}"
-						src="assets/img/trello.png" alt=""></img></a>
 				</div>
 			</div>
 
@@ -63,98 +59,44 @@
 
 				<div class="col-lg-3 mt">
 					<p>
-						<button th:text="#{web.main.feedback.email}" type="button"
-							class="btn btn-theme btn-lg">Email Me!</button>
+						<a th:text="#{web.main.feedback.email}" href="mailto:sga.vmp@gmail.com" type="button"
+							class="btn btn-theme btn-lg">Email Me!</a>
 					</p>
 				</div>
 			</div>
 		</div>
-
-		<section id="contact"></section>
-		<div id="social">
-			<div class="container">
-				<div class="row centered">
-					<div class="col-lg-8 col-lg-offset-2">
-						<div class="col-md-3">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-						</div>
-						<div class="col-md-3">
-							<a href="#"><i class="fa fa-dribbble"></i></a>
-						</div>
-						<div class="col-md-3">
-							<a href="#"><i class="fa fa-twitter"></i></a>
-						</div>
-						<div class="col-md-3">
-							<a href="#"><i class="fa fa-envelope"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /social -->
 	</main>
-	<main sec:authorize="isAuthenticated()" id="main-auth">
+	<main sec:authorize="isAuthenticated()" class="container" id="main-auth">
 		<div class="container">
 			<div class="row centered mt grid">
 				<p>Para acceder a la medida de cada aplicación pulse sobre el logo una vez conectes la cuenta.</p>
 			</div>
 			<div class="row centered mt grid">
-				<div class="col-lg-4 col-lg-offset-2">
+				<div th:each="app : ${apps}" class="col-lg-4">
 					<div class="thumbnail">
-						<a social:connected="github" th:href="@{/measure/github}" href="https://github.com/">
-						<img th:src="@{static/img/github.jpg}" src="assets/img/github.jpg"
-							alt="GITHUB"></img></a>
-						<a social:notconnected="github" href="https://github.com/">
-						<img th:src="@{static/img/github.jpg}" src="assets/img/github.jpg"
-							alt="GITHUB"></img></a>
+						<a th:if="${app.userIsConnect()}" th:href="@{'/measure/'+${app.code}}" href="https://github.com/">
+						<img th:src="${app.image}" src="assets/img/github.jpg"
+							th:alt="${app.nameApp}" alt="GITHUB"></img></a>
+						<a th:unless="${app.userIsConnect()}" th:href="${app.url}" href="https://github.com/">
+						<img th:src="${app.image}" src="assets/img/github.jpg"
+							th:alt="${app.nameApp}" alt="GITHUB"></img></a>
 						<div class="caption">
-							<h4>GitHub</h4>
-							<p>GitHub es una forja para alojar proyectos utilizando el
+							<h4 th:utext="${app.nameApp}">GitHub</h4>
+							<p th:text="${app.description}">GitHub es una forja para alojar proyectos utilizando el
 								sistema de control de versiones Git.</p>
-							<form social:notconnected="github" th:action="@{connect/github}"
+							<form th:unless="${app.userIsConnect()}" th:action="@{'connect/' + ${app.code}}"
 								method="POST">
 								<button class="btn btn-block btn-social btn-github"
 									type="submit">
-									<i class="fa fa-github"></i>Conectar con Github
+									<i th:class="'fa fa-' + ${app.code}" class="fa fa-github"></i><span th:utext="#{web.app.connect(${app.nameApp})}">Conectar con Github</span>
 								</button>
 							</form>
-							<form social:connected="github" th:action="@{connect/github}"
+							<form th:if="${app.userIsConnect()}" th:action="@{'connect/' + ${app.code}}"
 								method="POST">
 								<input type="hidden" name="_method" value="DELETE"></input>
 								<button class="btn btn-block btn-social btn-github"
 									type="submit">
-									<i class="fa fa-github"></i>Desconectar de Github
-								</button>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="thumbnail">
-						<a social:connected="trello" th:href="@{/measure/trello}" href="https://trello.com/"><img
-							th:src="@{static/img/trello.png}" src="assets/img/trello.png"
-							alt="TRELLO"></img></a>
-						<a social:notconnected="trello" href="https://trello.com/"><img
-							th:src="@{static/img/trello.png}" src="assets/img/trello.png"
-							alt="TRELLO"></img></a>
-						<div class="caption">
-							<h4>Trello</h4>
-							<p>Trello es una aplicación web que te permite gestionar
-								proyectos y tareas con el metodo Kanban.</p>
-							<form th:action="@{connect/trello}" method="POST"
-								social:notconnected="trello">
-								<button class="btn btn-block btn-social btn-trello"
-									type="submit">
-									<i class="fa fa-trello"></i>Conectar con Trello
-								</button>
-							</form>
-							<form th:action="@{connect/trello?expiration=never}" method="POST"
-								social:connected="trello">
-								<input type="hidden" name="_method" value="DELETE"></input>
-								<button class="btn btn-block btn-social btn-trello"
-									type="submit">
-									<i class="fa fa-trello"></i>Desconectar de Trello
+									<i th:class="'fa fa-' + ${app.code}" class="fa fa-github"></i><span th:utext="#{web.app.disconnect(${app.nameApp})}">Desconectar de Github</span>
 								</button>
 							</form>
 						</div>
