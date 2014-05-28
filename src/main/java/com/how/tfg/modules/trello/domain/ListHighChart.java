@@ -28,7 +28,7 @@ public class ListHighChart {
 	
 	public ListHighChart(String name, Map<Long,Integer> cards) {
 		this.name = name;
-		data = new ArrayList<>();
+		data = new ArrayList<List<String>>();
 		DateTime date = null;
 		for (Long day : cards.keySet()) {
 			List<String> temp = new ArrayList<String>();

@@ -4,163 +4,77 @@
 </head>
 <body>
 	<header th:include="base :: header"> </header>
-	<main class="container">
-		<div class="row">
-			<div class="col-lg-12bhoechie-tab-container">
-				<div class="col-lg-2 bhoechie-tab-menu">
-					<div class="list-group">
-						<a social:connected="github" th:href="@{/measure/github}"
-							th:class="((${app}=='github')?'active ':'') + 'list-group-item text-center'"
-							href="#" class="list-group-item text-center">
-							<h4 class="fa fa-github"></h4> <br />GitHub
-						</a>
-						<a social:connected="trello" th:href="@{/measure/trello}" href="#"
-							th:class="((${app}=='trello')?'active ':'') + 'list-group-item text-center'"
-							class="list-group-item active text-center">
-							<h4 class="fa fa-trello"></h4> <br />Trello
-						</a>
+	<main th:fragment="main">
+		<!-- trello section -->
+		<div social:connected="trello"
+			th:class="((${app}=='trello')?'active ':'') + 'bhoechie-tab-content'"
+			class="bhoechie-tab-content active">
+			<div class="row col-lg-12 panel panel-default panel-body">
+				<a class="btn btn-theme" type="button" th:text="#{web.apps.createmeasure}"
+					data-toggle="modal" data-target="#createTrello">Crear medida</a>
+			</div>
+			<div class="row col-lg-12 panel panel-default panel-body">
+				<div th:if="${measuresTrello}" class="col-lg-12">
+					<div class="panel-group" id="accordion">
+						<div th:each="measure,count : ${measuresTrello}"
+							class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										th:href="'#collapse' + ${count.count}" href="#collapse-"
+										th:text="${measure.name}"> Medidas del tablero ISPP </a>
+								</h4>
+							</div>
+							<div th:id="'collapse' + ${count.count}" id="collapseOne"
+								class="panel-collapse collapse">
+								<div class="panel-body">
+									<div th:id="${measure.id}" id="container"
+										style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
+									<a class="btn btn-danger"
+										th:href="@{'/measure/trello/delete/' + ${measure.id}}"
+										href="/measure/trello/delete/34234">Delete</a>
+										<a class="btn btn-theme"
+										th:href="@{'/measure/trello/refresh/measure/' + ${measure.id}}"
+										href="/measure/trello/delete/34234">Refresh</a>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
-				<div class="col-lg-10 bhoechie-tab">
-					<!-- trello section -->
-					<div social:connected="trello"
-						th:class="((${app}=='trello')?'active ':'') + 'bhoechie-tab-content'"
-						class="bhoechie-tab-content active">
-						<div class="row col-lg-12 panel panel-default panel-body">
-							<a class="btn btn-theme" type="button" th:text="#{web.apps.createmeasure}"
-								data-toggle="modal" data-target="#createTrello">Crear medida</a>
-						</div>
-						<div class="row col-lg-12 panel panel-default panel-body">
-							<div th:if="${measuresTrello}" class="col-lg-12">
-								<div class="panel-group" id="accordion">
-									<div th:each="measure,count : ${measuresTrello}"
-										class="panel panel-default">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion"
-													th:href="'#collapse' + ${count.count}" href="#collapse-"
-													th:text="${measure.name}"> Medidas del tablero ISPP </a>
-											</h4>
-										</div>
-										<div th:id="'collapse' + ${count.count}" id="collapseOne"
-											class="panel-collapse collapse">
-											<div class="panel-body">
-												<div th:id="${measure.id}" id="container"
-													style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
-												<a class="btn btn-danger"
-													th:href="@{'/measure/trello/delete/' + ${measure.id}}"
-													href="/measure/trello/delete/34234">Delete</a>
-													<a class="btn btn-theme"
-													th:href="@{'/measure/trello/refresh/measure/' + ${measure.id}}"
-													href="/measure/trello/delete/34234">Refresh</a>
-											</div>
-										</div>
-									</div>
-		
-								</div>
-							</div>
-							<div th:unless="${!#lists.isEmpty(measuresTrello)}" th:text="#{web.apps.notmeasure}"></div>
-						</div>
-						<!-- Modal -->
-						<div class="modal fade" id="createTrello" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">&times;</button>
-										<h4 class="modal-title" id="myModalLabel"
-											th:text="#{web.apps.create.trello}">Login</h4>
-									</div>
-									<div class="modal-body">
-									<ul>
-										<li th:each="board : ${boards}">	
-											<a th:href="@{'/measure/trello/create/board/' + ${board.id}}"
-												th:text="${board.name}">Nombre tablero</a>
-										</li>
-									</ul>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal" th:text="#{web.main.login.modal.close}">Close</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- github section -->
-					<div social:connected="github"
-						th:class="((${app}=='github')?'active ':'') + 'bhoechie-tab-content'"
-						class="bhoechie-tab-content">
-						<div class="row col-lg-12 panel panel-default panel-body">
-							<a class="btn btn-theme" type="button"
-								th:text="#{web.apps.createmeasure}" data-toggle="modal"
-								data-target="#createGithub">Crear medida</a>
-						</div>
-						<div class="row col-lg-12 panel panel-default panel-body">
-							<div th:if="${measuresGithub}" class="col-lg-12">
-								<div class="panel-group" id="accordion">
-									<div th:each="measure,count : ${measuresGithub}"
-										class="panel panel-default">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion"
-													th:href="'#collapse' + ${count.count}" href="#collapse-"
-													th:text="${measure.repoName}"> Medidas del tablero ISPP </a>
-											</h4>
-										</div>
-										<div th:id="'collapse' + ${count.count}" id="collapseOne"
-											class="panel-collapse collapse">
-											<div class="panel-body">
-												<div th:id="${measure.id}" id="container"
-													style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
-												<a class="btn btn-danger"
-													th:href="@{'/measure/github/delete/' + ${measure.id}}"
-													href="/measure/trello/delete/34234">Delete</a>
-												<a class="btn btn-theme"
-													th:href="@{'/measure/github/refresh/measure/' + ${measure.id}}"
-													href="/measure/trello/delete/34234">Refresh</a>
-											</div>
-										</div>
-									</div>
-		
-								</div>
-							</div>
-							<div th:unless="${!#lists.isEmpty(measuresGithub)}" th:text="#{web.apps.notmeasure}"></div>
-						</div>
-						<!-- Modal -->
-						<div class="modal fade" id="createGithub" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">&times;</button>
-										<h4 class="modal-title" id="myModalLabel"
-											th:text="#{web.apps.create.github}">Login</h4>
-									</div>
-									<div class="modal-body">
-										<ul>
-											<li th:each="repo : ${repos}">
-												<a th:href="@{'/measure/github/create/repo/' + ${repo.name}}"
-													th:text="${repo.name}">Nombre repositorio</a>
-											</li>
-										</ul>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal" th:text="#{web.main.login.modal.close}">Close</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<div th:unless="${!#lists.isEmpty(measuresTrello)}" th:text="#{web.apps.notmeasure}"></div>
 			</div>
 		</div>
 	</main>
 	<footer th:include="base :: footer"> </footer>
-	<script th:each="measure : ${measuresTrello}" th:inline="javascript">
+	<div th:fragment="script">
+		<!-- Modal -->
+			<div class="modal fade" id="createTrello" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel"
+								th:text="#{web.apps.create.trello}">Login</h4>
+						</div>
+						<div class="modal-body">
+						<ul>
+							<li th:each="board : ${boards}">	
+								<a th:href="@{'/measure/trello/create/board/' + ${board.id}}"
+									th:text="${board.name}">Nombre tablero</a>
+							</li>
+						</ul>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal" th:text="#{web.main.login.modal.close}">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<script th:each="measure : ${measuresTrello}" th:inline="javascript">
 				$(function () {
 					/*<![CDATA[*/
 	        		var options = {
@@ -224,69 +138,6 @@
 			    });
 				/*]]>*/
 			</script>
-			<script th:each="measure : ${measuresGithub}" th:inline="javascript">
-				$(function () {
-					/*<![CDATA[*/
-	        		var options = {
-						colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', 
-						         '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'],
-			            chart: {
-			            	renderTo: [[${measure.id}]],
-			                type: 'spline'
-			            },
-			            title: {
-			                text: 'Commits del repositorio ' + [[${measure.repoUser}]] + "/" + [[${measure.repoName}]] 
-			            },
-			            subtitle: {
-			                text: 'Evolución historica'
-			            },
-			            xAxis: {
-			                type: 'datetime',
-			                dateTimeLabelFormats: { // don't display the dummy year
-			                	day: '%e-%b-%Y',
-			                },
-			                title: {
-			                    text: 'Fecha'
-			                }
-			            },
-			            yAxis: {
-			                title: {
-			                    text: 'Numero de commits'
-			                },
-			                min: 0
-			            },
-			            tooltip: {
-			                headerFormat: '<b>{point.y} Commits</b><br>',
-			                pointFormat: '{point.x:%e-%b-%Y} '
-			            },
-	
-			            series: []
-			        };
-                    $.getJSON([[@{'/measure/github/data/'+ ${measure.id}+'/json'}]], function(data) {
-                    	 $.each(data, function(key,value) {
-                             var series = { data: []};
-                             $.each(value, function(key,val) {
-                                 if (key == 'name') {
-                                     series.name = val;
-                                 }
-                                 else if (key == 'color') {
-                                	 series.color = val;
-                                 }
-                                 else
-                                 {
-                                     $.each(val, function(key,val) {
-                                         var d = String(val).split(",");
-                                         var x = Date.UTC(d[0],d[1],d[2]);
-                                         series.data.push([x,parseInt(d[3])]);
-                                     });
-                                 }
-                             });
-                        options.series.push(series);
-                        var chart = new Highcharts.Chart(options);
-						});
-                    });
-			    });
-				/*]]>*/
-			</script>
+		</div>
 </body>
 </html>

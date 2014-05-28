@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,32 +17,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.how.tfg.modules.trello.domain.BoardMeasure;
 import com.how.tfg.modules.trello.domain.ListHighChart;
 import com.how.tfg.modules.trello.services.TrelloService;
+import com.how.tfg.mvc.BaseController;
 import com.julienvey.trello.domain.Board;
 
 @Controller
 @RequestMapping("/measure/trello")
-public class TrelloController {
+public class TrelloController extends BaseController {
 
 	private TrelloService trello;
 	
 	@Autowired
 	public TrelloController(TrelloService trello) {
+		this.image="static/img/modules/trello.png";
+		this.nameApp="Trello";
+		this.url="https://trello.com/";
+		this.code="trello";
+		this.description="Trello es una aplicaci�n web que te permite gestionar proyectos y tareas con el metodo Kanban.";
 		this.trello = trello;
 	}
 
 	@ModelAttribute("boards")
 	public List<Board> getAllBoards(){
 		return trello.getAllBoard();
-	}
-	
-	@ModelAttribute("menu")
-	public String getMenuOpt(){
-		return "measure";
-	}
-	
-	@ModelAttribute("app")
-	public String getAppName(){
-		return "trello";
 	}
 	
 	@ModelAttribute("measuresTrello")
