@@ -25,9 +25,12 @@ public class UserDetails extends SocialUser {
     private Role role;
 
     private SocialMediaService socialSignInProvider;
+    
+    private String imageProfile;
 
-    public UserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities, String imageProfile) {
         super(username, password, authorities);
+        this.imageProfile = imageProfile;
     }
 
 
@@ -89,6 +92,16 @@ public class UserDetails extends SocialUser {
 		this.socialSignInProvider = socialSignInProvider;
 	}
 	
+	public String getImageProfile() {
+		return imageProfile;
+	}
+
+
+	public void setImageProfile(String imageProfile) {
+		this.imageProfile = imageProfile;
+	}
+
+
 	public static Builder getBuilder() {
 		return new Builder();
 	}
@@ -106,6 +119,8 @@ public class UserDetails extends SocialUser {
         private String lastName;
 
         private String password="";
+        
+        private String imageProfile;
 
         private Role role;
 
@@ -140,6 +155,11 @@ public class UserDetails extends SocialUser {
 
             return this;
         }
+        
+        public Builder imageProfile(String imageProfile) {
+        	this.imageProfile = imageProfile;
+        	return this;
+        }
 
         public Builder socialSignInProvider(SocialMediaService socialSignInProvider) {
             this.socialSignInProvider = socialSignInProvider;
@@ -152,12 +172,13 @@ public class UserDetails extends SocialUser {
         }
 
         public UserDetails build() {
-        	UserDetails user = new UserDetails(username, password, authorities);
+        	UserDetails user = new UserDetails(username, password, authorities, imageProfile);
 
             user.id = id;
             user.firstName = firstName;
             user.lastName = lastName;
             user.role = role;
+            user.imageProfile = imageProfile;
             user.socialSignInProvider = socialSignInProvider;
 
             return user;

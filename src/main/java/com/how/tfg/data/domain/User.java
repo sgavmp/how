@@ -34,7 +34,10 @@ public class User extends BaseEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 20, nullable = false)
     private Role role;
-
+    
+    @Column(name = "image_profile")
+    private String imageProfile;
+    
     public User() {
 
     }
@@ -79,6 +82,14 @@ public class User extends BaseEntity<Long> {
 		this.role = role;
 	}
 	
+	public String getImageProfile() {
+		return imageProfile;
+	}
+
+	public void setImageProfile(String imageProfile) {
+		this.imageProfile = imageProfile;
+	}
+
 	public static Builder getBuilder() {
         return new Builder();
     }
@@ -105,6 +116,11 @@ public class User extends BaseEntity<Long> {
         public Builder lastName(String lastName) {
             user.lastName = lastName;
             return this;
+        }
+        
+        public Builder imageProfile(String imageProfile) {
+        	user.imageProfile = imageProfile;
+        	return this;
         }
 
         public User build() {

@@ -34,7 +34,8 @@ public class RepositoryUserService implements UserService {
 			User.Builder user = User.getBuilder()
 					.email(socialMediaProfile.getEmail())
 					.firstName(socialMediaProfile.getFirstName())
-					.lastName(socialMediaProfile.getLastName());
+					.lastName(socialMediaProfile.getLastName())
+					.imageProfile(connection.getImageUrl());
 
 			User registered = user.build();
 

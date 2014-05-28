@@ -16,6 +16,7 @@ public class SecurityUtil {
                 .lastName(user.getLastName())
                 .role(user.getRole())
                 .username(user.getEmail())
+                .imageProfile(user.getImageProfile())
                 .build();
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

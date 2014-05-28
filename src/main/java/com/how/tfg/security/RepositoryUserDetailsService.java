@@ -40,6 +40,7 @@ public class RepositoryUserDetailsService  implements UserDetailsService {
                 .lastName(user.getLastName())
                 .role(user.getRole())
                 .username(user.getEmail())
+                .imageProfile(user.getImageProfile())
                 .build();
 
         return principal;
