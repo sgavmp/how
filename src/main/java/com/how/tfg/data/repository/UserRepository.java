@@ -1,7 +1,6 @@
 package com.how.tfg.data.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import com.how.tfg.data.domain.User;
 

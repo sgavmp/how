@@ -1,18 +1,12 @@
 package com.how.tfg.modules.trello.domain;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class BoardMeasure {
 

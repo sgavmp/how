@@ -16,7 +16,12 @@ import com.how.tfg.data.domain.enumerate.SocialMediaService;
  */
 public class UserDetails extends SocialUser {
 
-    private Long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4368203050242058439L;
+
+	private Long id;
 
     private String firstName;
 

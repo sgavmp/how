@@ -1,7 +1,6 @@
 package com.how.tfg.modules.github.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

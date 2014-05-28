@@ -4,6 +4,7 @@ spring:
     username: tfg
     password: tfg
     driverClassName: org.postgresql.Driver
+    continueOnError: true
   data:
     mongodb:
       uri: mongodb://localhost:27017/how

@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.mongodb.Mongo;
-
 @Configuration
 @Profile("heroku")
 public class HerokuConfig extends AbstractCloudConfig  {

@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.config.ScheduledTasksBeanDefinitionParser;
 
+import com.how.tfg.modules.RefreshMeasureTask;
 import com.how.tfg.modules.trello.repository.BoardMeasureRepository;
 
 @Configuration
@@ -33,7 +35,7 @@ public class Application implements CommandLineRunner{
             webPort = "8080";
         }
         System.setProperty("server.port", webPort);
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(new Object[]{Application.class,RefreshMeasureTask.class}, args);
     }
 
     @Override

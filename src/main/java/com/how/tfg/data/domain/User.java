@@ -1,7 +1,5 @@
 package com.how.tfg.data.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,7 +11,6 @@ import javax.persistence.Table;
 
 import com.how.tfg.data.domain.common.BaseEntity;
 import com.how.tfg.data.domain.enumerate.Role;
-import com.how.tfg.data.domain.enumerate.SocialMediaService;
 
 @Entity
 @Table(name="how_user")
