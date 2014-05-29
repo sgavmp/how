@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                                 "/main",
                                 "/static/**",
                                 "/webjars/**",
-                                "/state/**",
+                                "/state",
                                 "/error/**"
                         ).permitAll()
                         //The rest of the our application is protected.

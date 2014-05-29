@@ -97,14 +97,13 @@ public class MainController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/state/{appId}", method = RequestMethod.GET)
-	public @ResponseBody Map<String, String> getStatusOfApp(WebRequest request, @PathVariable("appId") String appId) {
+	@RequestMapping(value="/state", method = RequestMethod.GET)
+	public @ResponseBody Map<String, String> getStatusOfApp(WebRequest request) {
 		Map<String, String> stats = new HashMap<String,String>();
 		DateTime start = DateTime.now();
 		service.measureStateOfServer();
 		DateTime end = DateTime.now();
 		stats.put("Start", start.toString());
-		stats.put("AppId", appId);
 		stats.put("Time", new Long(end.minus(start.getMillis()).getMillis()).toString());
 		stats.put("End", end.toString());
 		return stats;
