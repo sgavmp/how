@@ -1,21 +1,28 @@
 package com.how.tfg.mvc;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.how.tfg.data.domain.User;
+import com.how.tfg.modules.core.controller.BaseController;
 import com.how.tfg.security.SecurityUtil;
 import com.how.tfg.social.UserService;
 
@@ -88,6 +95,22 @@ public class MainController {
 		providerSign.doPostSignUp(registered.getEmail(), request);
 
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/state/{appId}", method = RequestMethod.GET)
+	public @ResponseBody Map<String, String> getStatusOfApp(WebRequest request, @PathVariable("appId") String appId) {
+		String id = System.getenv("appId");
+		if (!appId.equals(id))
+			throw new AccessDeniedException("The AppId is not correct.");
+		Map<String, String> stats = new HashMap<String,String>();
+		DateTime start = DateTime.now();
+		service.measureStateOfServer();
+		DateTime end = DateTime.now();
+		stats.put("Start", start.toString());
+		stats.put("AppId", appId);
+		stats.put("Time", new Long(end.minus(start.getMillis()).getMillis()).toString());
+		stats.put("End", end.toString());
+		return stats;
 	}
 
 }

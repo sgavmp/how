@@ -1,5 +1,7 @@
 package com.how.tfg.social;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,18 @@ public class RepositoryUserService implements UserService {
 			
 			return u;
 			
+		}
+	}
+
+	@Override
+	public void measureStateOfServer() {
+		List<User> users = (List<User>) repository.findAll();
+		int i=0;
+		for (User u : users) {
+			repository.findByEmail(u.getEmail());
+			i++;
+			if (i>=5)
+				break;
 		}
 	}
 
