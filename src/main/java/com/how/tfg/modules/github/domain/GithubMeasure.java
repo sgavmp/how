@@ -2,60 +2,17 @@ package com.how.tfg.modules.github.domain;
 
 import java.util.Map;
 
-import javax.persistence.Id;
+import com.how.tfg.modules.core.domain.MeasureModuleAbstract;
 
-import org.joda.time.DateTime;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-public class GithubMeasure {
-
-	@Id
-	private String id;
+public class GithubMeasure extends MeasureModuleAbstract {
+	
 	private String repoId;
 	private String repoUser;
 	private String repoName;
-	@CreatedDate
-	private DateTime dateCreation;
-	@LastModifiedDate
-	private DateTime updateCreation;
-	private String email;
 	private Map<Long, Integer> commitsDay;
 
 	public GithubMeasure() {
 
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public DateTime getDateCreation() {
-		return dateCreation;
-	}
-
-	public void setDateCreation(DateTime dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public DateTime getUpdateCreation() {
-		return updateCreation;
-	}
-
-	public void setUpdateCreation(DateTime updateCreation) {
-		this.updateCreation = updateCreation;
 	}
 
 	public String getRepoId() {

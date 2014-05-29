@@ -2,36 +2,18 @@ package com.how.tfg.modules.trello.domain;
 
 import java.util.Map;
 
-import javax.persistence.Id;
+import com.how.tfg.modules.core.domain.MeasureModuleAbstract;
 
-import org.joda.time.DateTime;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-public class BoardMeasure {
-
-	@Id
-	private String id;
+public class BoardMeasure extends MeasureModuleAbstract {
+	
 	private String boardId;
 	private String name;
-	@CreatedDate
-	private DateTime dateCreation;
-	@LastModifiedDate
-	private DateTime updateCreation;
-	private String email;
 	private Map<String, String> listName;
 	private Map<String, Map<Long,Integer>> taskForList;
 
 	public BoardMeasure() {
 
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getBoardId() {
@@ -50,22 +32,6 @@ public class BoardMeasure {
 		this.name = name;
 	}
 
-	public DateTime getDateCreation() {
-		return dateCreation;
-	}
-
-	public void setDateCreation(DateTime dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public Map<String, Map<Long, Integer>> getTaskForList() {
 		return taskForList;
 	}
@@ -74,13 +40,6 @@ public class BoardMeasure {
 		this.taskForList = taskForList;
 	}
 	
-	public DateTime getUpdateCreation() {
-		return updateCreation;
-	}
-
-	public void setUpdateCreation(DateTime updateCreation) {
-		this.updateCreation = updateCreation;
-	}
 
 	public Map<String, String> getListName() {
 		return listName;

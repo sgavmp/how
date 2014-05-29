@@ -11,38 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.github.api.GitHub;
-import org.springframework.social.github.api.GitHubCommit;
-import org.springframework.social.github.api.GitHubIssue;
 import org.springframework.social.github.api.GitHubRepo;
 import org.springframework.social.github.api.GitHubStatsCommitActivity;
-import org.springframework.social.github.api.GitHubStatsParticipation;
 import org.springframework.social.github.api.GitHubUserProfile;
 import org.springframework.stereotype.Service;
 
+import com.how.tfg.modules.core.services.ServiceModuleAbstract;
 import com.how.tfg.modules.github.domain.GithubMeasure;
 import com.how.tfg.modules.github.repository.GithubMeasureRepository;
 
 @Service
-public class GitHubService {
+public class GitHubService extends ServiceModuleAbstract<GitHub, GithubMeasure> {
 	
 	private GithubMeasureRepository repository;
-	
-	private ConnectionRepository connectionRepository;
 
 	@Autowired
-    public GitHubService(GithubMeasureRepository repository, ConnectionRepository connectionRepository) {
+	public GitHubService(ConnectionRepository connectionRepository, GithubMeasureRepository repository, UsersConnectionRepository userConnectionRepository) {
+        super(connectionRepository, repository, userConnectionRepository, "github");
         this.repository = repository;
-        this.connectionRepository = connectionRepository;
     }
 	
 	public String getEmailOfUserLgoin() {
 		return SecurityContextHolder.getContext().getAuthentication().getName();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public GitHub getApi() {
-		return ((Connection<GitHub>) connectionRepository.findConnections("github").get(0)).getApi();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -86,7 +78,6 @@ public class GitHubService {
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(getLogin(), repoName);
 		Collections.sort(stats);
 		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
-//		DateTime initYear = new DateTime(DateTime.now().getYear(), 1, 1, 0, 0);
 		for (GitHubStatsCommitActivity stat : stats) {
 			if (stat.getTotal()!=0) {
 				DateTime day = new DateTime(stat.getWeek()*1000);
@@ -104,6 +95,10 @@ public class GitHubService {
 	
 	public void refreshMeasure(String measureId) {
 		GithubMeasure measure = repository.findOne(measureId);
+		this.refreshMeasure(measure);
+	}
+	
+	public void refreshMeasure(GithubMeasure measure) {
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(measure.getRepoUser(), measure.getRepoName());
 		Collections.sort(stats);
 		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
@@ -121,32 +116,33 @@ public class GitHubService {
 		measure.setCommitsDay(commitPerDay);
 		repository.save(measure);
 	}
-
-	public void deleteMeasureOfId(String measureid) {
-		repository.delete(measureid);
-	}
-	
-	public List<GitHubIssue> getAllIssuesForRepository(String name) {
-		return getApi().repoOperations().getIssues(getLogin(), name);
-	}
-	
-	public List<GitHubCommit> getAllCommitForRepository(String name) {
-		return getApi().repoOperations().getCommits(getLogin(), name);
-	}
 	
 	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name) {
-		return getApi().statsOperations().getCommitActivity(user, name);
+		return getStatsCommitActivity(user, name, getApi());
 	}
 	
-	public GitHubStatsParticipation getStatsParticipation(String user, String name) {
-		return getApi().statsOperations().getParticipation(user, name);
+	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name, GitHub api) {
+		return api.statsOperations().getCommitActivity(user, name);
 	}
 
-	public GithubMeasure getBoardMeasureById(String measureid) {
-		return repository.findOne(measureid);
-	}
-	
-	public boolean haveConnection() {
-		return connectionRepository.findConnections("github").size()>0; 
+	@Override
+	public void refreshMeasureOffline(GithubMeasure measure) {
+		GitHub api = super.getApiOfMeasureUser(measure);
+		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(measure.getRepoUser(), measure.getRepoName(), api);
+		Collections.sort(stats);
+		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
+		for (GitHubStatsCommitActivity stat : stats) {
+			if (stat.getTotal()!=0) {
+				DateTime day = new DateTime(stat.getWeek()*1000);
+				for (Integer n : stat.getDays()) {
+					if (n!=0) {
+						commitPerDay.put(day.getMillis(), n);
+					}
+					day = day.plusDays(1);
+				}
+			}
+		}
+		measure.setCommitsDay(commitPerDay);
+		repository.save(measure);
 	}
 }

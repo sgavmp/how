@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.how.tfg.modules.core.controller.BaseController;
 import com.how.tfg.modules.trello.domain.BoardMeasure;
 import com.how.tfg.modules.trello.domain.ListHighChart;
 import com.how.tfg.modules.trello.services.TrelloService;
-import com.how.tfg.mvc.BaseController;
 import com.julienvey.trello.domain.Board;
 
 @Controller
@@ -85,7 +85,7 @@ public class TrelloController extends BaseController {
 	
 	@RequestMapping("/data/{measureid}/json")
 	public @ResponseBody List<ListHighChart> getDataOfMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid) {
-		BoardMeasure measure = trello.getBoardMeasureById(measureid);
+		BoardMeasure measure = trello.getMeasureById(measureid);
 		Map<String,Map<Long,Integer>> temp = measure.getTaskForList();
 		List<ListHighChart> listas = new ArrayList<ListHighChart>();
 		for (String key : temp.keySet()) {

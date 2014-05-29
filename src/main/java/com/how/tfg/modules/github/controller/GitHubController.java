@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.how.tfg.modules.core.controller.BaseController;
 import com.how.tfg.modules.github.domain.CommitHighChart;
 import com.how.tfg.modules.github.domain.GithubMeasure;
 import com.how.tfg.modules.github.services.GitHubService;
-import com.how.tfg.mvc.BaseController;
 
 @Controller
 @RequestMapping("/measure/github")
@@ -84,7 +84,7 @@ public class GitHubController extends BaseController {
 	
 	@RequestMapping("/data/{measureid}/json")
 	public @ResponseBody List<CommitHighChart> getDataOfMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid) {
-		GithubMeasure measure = github.getBoardMeasureById(measureid);
+		GithubMeasure measure = github.getMeasureById(measureid);
 		CommitHighChart commit = new CommitHighChart(measure.getCommitsDay());
 		return Arrays.asList(commit);
 	}
