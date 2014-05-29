@@ -66,4 +66,6 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 }
 
+test.onlyIf { Boolean.getBoolean('skip.tests') }
+
 task stage(dependsOn: ['build'])
