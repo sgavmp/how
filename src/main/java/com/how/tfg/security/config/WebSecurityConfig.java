@@ -3,9 +3,12 @@ package com.how.tfg.security.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
@@ -26,6 +29,7 @@ import com.how.tfg.social.SimpleSocialUserDetailsService;
  */
 @Configuration
 @EnableWebMvcSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
@@ -41,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .rememberMe()
                 .key("6772b7939386362af7ed96915")
                 .rememberMeServices(persistentTokenBasedRememberMeServices())
+                .and().formLogin().loginPage("/error/login")
                 //Configures the logout function
                 .and()
                     .logout()
@@ -60,10 +65,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                                 "/",
                                 "/main",
                                 "/static/**",
-                                "/webjars/**"
+                                "/webjars/**",
+                                "/state/**",
+                                "/error/**"
                         ).permitAll()
                         //The rest of the our application is protected.
                         .antMatchers("/**").hasRole("USER")
+                .and()
+               		.exceptionHandling()
+               			.accessDeniedPage("/error/login")
                 //Adds the SocialAuthenticationFilter to Spring Security's filter chain.
                 .and()
                     .apply(new SpringSocialConfigurer());

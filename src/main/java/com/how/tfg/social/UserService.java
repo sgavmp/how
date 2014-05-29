@@ -7,5 +7,6 @@ import com.how.tfg.data.domain.User;
 public interface UserService {
 	
 	public User registerNewUserAccountOrGet(Connection<?> connection);
+	public void measureStateOfServer();
 
 }

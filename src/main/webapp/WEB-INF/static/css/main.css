@@ -162,6 +162,23 @@ hr {
 	letter-spacing: 1px;
 }
 
+.error {
+	margin-top: 3%;
+}
+
+.error img {
+	width: 100%;
+}
+
+.error h1 {
+	color: #6661ec;
+	font-weight: bold;
+}
+
+.error .text {
+	margin-top: 10%;
+}
+
 /* WRAP SECTIONS */
 
 /* hello */
@@ -353,22 +370,12 @@ div.bhoechie-tab-content {
 	padding-top: 10px;
 	overflow: overlay;
 }
+
 div
 .bhoechie-tab
  
 div
 .bhoechie-tab-content
-:not
- 
-(
-.active
- 
-){
-display
-:
- 
-none
-;
-
-
+:not (.active ){
+	display: none
 }

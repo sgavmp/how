@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="base :: head">
+</head>
+<body>
+	<header th:include="base :: header"> </header>
+	<main class="conatiner error">
+	<div class="col-lg-offset-3 col-lg-6 mt">
+		<div class="col-lg-6">
+			<img th:src="@{/static/img/logo.png}" src="/static/img/logo.png"></img>
+		</div>
+		<div class="col-lg-6">
+			<h1>Oops.</h1>
+			<a class="btn btn-theme" th:href="@{/}" href="/">Go back to our homepage</a>
+		</div>
+	</div>
+	</main>
+	<!-- Modal -->
+		<div sec:authorize="!isAuthenticated()" class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel" th:text="#{web.main.login.modal.title}">Login</h4>
+		      </div>
+		      <div class="modal-body">
+		        <h5 th:text="#{web.main.login.modal.text}">Puedes iniciar sesión con cualquier de los dos servicios online. Las cuentas se asocian por el correo electronico, así que si tienes el mismo correo en ambas cuentas podras iniciar sesión con ambas indistintamente.</h5>
+		        <a class="btn btn-block btn-social btn-facebook" th:href="@{/auth/facebook?scope=email}" th:utext="#{web.main.login.modal.facebook}"><i class="fa fa-facebook"></i> Sign in with Facebook</a>
+				<a class="btn btn-block btn-social btn-google-plus" th:href="@{/auth/google?scope=email&amp;redirect_uri=http://localhost:8080/user/register}" th:utext="#{web.main.login.modal.google}"><i class="fa fa-google"></i> Sign in with Google</a>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{web.main.login.modal.close}">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- Bootstrap core JavaScript
+	    ================================================== -->
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	    <script th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
