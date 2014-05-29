@@ -1,4 +1,4 @@
-package com.how.tfg.social;
+package com.how.tfg.data.service;
 
 import java.util.List;
 
@@ -13,12 +13,12 @@ import com.how.tfg.data.domain.User;
 import com.how.tfg.data.repository.UserRepository;
 
 @Service
-public class RepositoryUserService implements UserService {
+public class ImplUserService implements UserService {
 
 	private UserRepository repository;
 
 	@Autowired
-	public RepositoryUserService(UserRepository repository) {
+	public ImplUserService(UserRepository repository) {
 		this.repository = repository;
 	}
 

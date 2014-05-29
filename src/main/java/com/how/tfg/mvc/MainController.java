@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.how.tfg.data.domain.User;
+import com.how.tfg.data.service.UserService;
 import com.how.tfg.modules.core.controller.BaseController;
 import com.how.tfg.security.SecurityUtil;
-import com.how.tfg.social.UserService;
 
 @Controller
 @SessionAttributes("user")

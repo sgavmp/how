@@ -1,4 +1,4 @@
-package com.how.tfg.social;
+package com.how.tfg.data.service;
 
 import org.springframework.social.connect.Connection;
 
