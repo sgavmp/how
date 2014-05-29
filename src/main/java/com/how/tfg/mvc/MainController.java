@@ -99,9 +99,6 @@ public class MainController {
 	
 	@RequestMapping(value="/state/{appId}", method = RequestMethod.GET)
 	public @ResponseBody Map<String, String> getStatusOfApp(WebRequest request, @PathVariable("appId") String appId) {
-		String id = System.getenv("how.appId");
-		if (!appId.equals(id))
-			throw new AccessDeniedException("The AppId is not correct.");
 		Map<String, String> stats = new HashMap<String,String>();
 		DateTime start = DateTime.now();
 		service.measureStateOfServer();
