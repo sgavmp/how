@@ -58,6 +58,8 @@ dependencies {
     compile 'org.webjars:chartjs:26962ce'
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
     compile 'org.webjars:highcharts:3.0.9'
+    compile 'org.kubek2k:springockito:1.0.9'
+    compile 'org.kubek2k:springockito-annotations:1.0.9'
     
     compile('postgresql:postgresql:9.1-901.jdbc4')
     compile("mysql:mysql-connector-java:5.1.30")
