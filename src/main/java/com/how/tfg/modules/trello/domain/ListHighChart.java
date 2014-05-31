@@ -42,7 +42,6 @@ public class ListHighChart {
 		temp.add(now.getYear()+","+(now.getMonthOfYear()-1)+","+now.getDayOfMonth());
 		temp.add(numNow.toString());
 		data.add(temp);
-//		Collections.reverse(data);
 		color = colors[aColor++];
 		if (aColor==maxColor)
 			aColor=0;

@@ -1,5 +1,6 @@
 package com.how.tfg.modules.github.services;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,8 @@ import org.springframework.social.github.api.GitHubStatsCommitActivity;
 import org.springframework.social.github.api.GitHubUserProfile;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.how.tfg.modules.core.services.ServiceModuleAbstract;
 import com.how.tfg.modules.github.domain.GithubMeasure;
 import com.how.tfg.modules.github.repository.GithubMeasureRepository;
@@ -78,14 +81,21 @@ public class GitHubService extends ServiceModuleAbstract<GitHub, GithubMeasure> 
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(getLogin(), repoName);
 		Collections.sort(stats);
 		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
-		for (GitHubStatsCommitActivity stat : stats) {
-			if (stat.getTotal()!=0) {
-				DateTime day = new DateTime(stat.getWeek()*1000);
-				for (Integer n : stat.getDays()) {
-					if (n!=0) {
-						commitPerDay.put(day.getMillis(), n);
+		if (stats!=null) {
+			if (stats.size()>1) {
+				for (GitHubStatsCommitActivity stat : stats) {
+					if (stat.getTotal()!=0) {
+						DateTime day = new DateTime(stat.getWeek()*1000);
+						for (Integer n : stat.getDays()) {
+							if (n!=0) {
+								commitPerDay.put(day.getMillis(), n);
+							}
+							day = day.plusDays(1);
+						}
 					}
-					day = day.plusDays(1);
+				}
+				if (commitPerDay.isEmpty()) {
+					commitPerDay.put(DateTime.now().getMillis(), 0);
 				}
 			}
 		}
@@ -93,23 +103,30 @@ public class GitHubService extends ServiceModuleAbstract<GitHub, GithubMeasure> 
 		repository.save(measure);
 	}
 	
-	public void refreshMeasure(String measureId) {
+	public void refreshMeasure(String measureId) throws JsonParseException, JsonMappingException, IOException {
 		GithubMeasure measure = repository.findOne(measureId);
 		this.refreshMeasure(measure);
 	}
 	
-	public void refreshMeasure(GithubMeasure measure) {
+	public void refreshMeasure(GithubMeasure measure) throws JsonParseException, JsonMappingException, IOException {
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(measure.getRepoUser(), measure.getRepoName());
 		Collections.sort(stats);
 		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
-		for (GitHubStatsCommitActivity stat : stats) {
-			if (stat.getTotal()!=0) {
-				DateTime day = new DateTime(stat.getWeek()*1000);
-				for (Integer n : stat.getDays()) {
-					if (n!=0) {
-						commitPerDay.put(day.getMillis(), n);
+		if (stats!=null) {
+			if (stats.size()>1) {
+				for (GitHubStatsCommitActivity stat : stats) {
+					if (stat.getTotal()!=0) {
+						DateTime day = new DateTime(stat.getWeek()*1000);
+						for (Integer n : stat.getDays()) {
+							if (n!=0) {
+								commitPerDay.put(day.getMillis(), n);
+							}
+							day = day.plusDays(1);
+						}
 					}
-					day = day.plusDays(1);
+				}
+				if (commitPerDay.isEmpty()) {
+					commitPerDay.put(DateTime.now().getMillis(), 0);
 				}
 			}
 		}
@@ -117,28 +134,35 @@ public class GitHubService extends ServiceModuleAbstract<GitHub, GithubMeasure> 
 		repository.save(measure);
 	}
 	
-	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name) {
+	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name) throws JsonParseException, JsonMappingException, IOException {
 		return getStatsCommitActivity(user, name, getApi());
 	}
 	
-	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name, GitHub api) {
+	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name, GitHub api) throws JsonParseException, JsonMappingException, IOException {
 		return api.statsOperations().getCommitActivity(user, name);
 	}
 
 	@Override
-	public void refreshMeasureOffline(GithubMeasure measure) {
+	public void refreshMeasureOffline(GithubMeasure measure) throws JsonParseException, JsonMappingException, IOException {
 		GitHub api = super.getApiOfMeasureUser(measure);
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(measure.getRepoUser(), measure.getRepoName(), api);
 		Collections.sort(stats);
 		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
-		for (GitHubStatsCommitActivity stat : stats) {
-			if (stat.getTotal()!=0) {
-				DateTime day = new DateTime(stat.getWeek()*1000);
-				for (Integer n : stat.getDays()) {
-					if (n!=0) {
-						commitPerDay.put(day.getMillis(), n);
+		if (stats!=null) {
+			if (stats.size()>1) {
+				for (GitHubStatsCommitActivity stat : stats) {
+					if (stat.getTotal()!=0) {
+						DateTime day = new DateTime(stat.getWeek()*1000);
+						for (Integer n : stat.getDays()) {
+							if (n!=0) {
+								commitPerDay.put(day.getMillis(), n);
+							}
+							day = day.plusDays(1);
+						}
 					}
-					day = day.plusDays(1);
+				}
+				if (commitPerDay.isEmpty()) {
+					commitPerDay.put(DateTime.now().getMillis(), 0);
 				}
 			}
 		}
