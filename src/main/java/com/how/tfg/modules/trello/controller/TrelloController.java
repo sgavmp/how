@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -46,15 +47,7 @@ public class TrelloController extends BaseController {
 		return trello.getAllMeasure();
 	}
 	
-	@RequestMapping({"","/"})
-	public String boards(WebRequest request, Model model, RedirectAttributes redirectAttributes) {
-		if (trello.haveConnection())
-			return "measure";
-		redirectAttributes.addFlashAttribute("error", "web.trello.noconnection");
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/create/board/{boardid}")
+	@RequestMapping(value = "/create/board/{boardid}", method = RequestMethod.GET)
 	public String createMeasure(WebRequest request, Model model,@PathVariable("boardid") String boardId, RedirectAttributes redirectAttributes) {
 		model.asMap().clear();
 		if (trello.notExistBoardMeasure(boardId)) {
@@ -67,7 +60,7 @@ public class TrelloController extends BaseController {
 		return "redirect:/measure/trello";
 	}
 	
-	@RequestMapping("/refresh/measure/{measureId}")
+	@RequestMapping(value = "/refresh/measure/{measureId}", method = RequestMethod.GET)
 	public String refreshMeasure(WebRequest request, Model model,@PathVariable("measureId") String measureId, RedirectAttributes redirectAttributes) {
 		trello.refreshMeasure(measureId);
 		model.asMap().clear();
@@ -75,7 +68,7 @@ public class TrelloController extends BaseController {
 		return "redirect:/measure/trello";
 	}
 	
-	@RequestMapping("/delete/{measureid}")
+	@RequestMapping(value = "/delete/{measureid}", method = RequestMethod.GET)
 	public String deleteMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid, RedirectAttributes redirectAttributes) {
 		trello.deleteMeasureOfId(measureid);
 		model.asMap().clear();
@@ -83,7 +76,7 @@ public class TrelloController extends BaseController {
 		return "redirect:/measure/trello";
 	}
 	
-	@RequestMapping("/data/{measureid}/json")
+	@RequestMapping(value = "/data/{measureid}/json", method = RequestMethod.GET)
 	public @ResponseBody List<ListHighChart> getDataOfMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid) {
 		BoardMeasure measure = trello.getMeasureById(measureid);
 		Map<String,Map<Long,Integer>> temp = measure.getTaskForList();
@@ -92,6 +85,14 @@ public class TrelloController extends BaseController {
 			listas.add(new ListHighChart(measure.getListName().get(key), temp.get(key)));
 		}
 		return listas;
+	}
+	
+	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
+	public String boards(WebRequest request, Model model, RedirectAttributes redirectAttributes) {
+		if (trello.haveConnection())
+			return "measure";
+		redirectAttributes.addFlashAttribute("error", "web.trello.noconnection");
+		return "redirect:/";
 	}
 
 }

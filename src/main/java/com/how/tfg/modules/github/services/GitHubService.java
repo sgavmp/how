@@ -103,12 +103,12 @@ public class GitHubService extends ServiceModuleAbstract<GitHub, GithubMeasure> 
 		repository.save(measure);
 	}
 	
-	public void refreshMeasure(String measureId) throws JsonParseException, JsonMappingException, IOException {
+	public void refreshMeasure(String measureId) {
 		GithubMeasure measure = repository.findOne(measureId);
 		this.refreshMeasure(measure);
 	}
 	
-	public void refreshMeasure(GithubMeasure measure) throws JsonParseException, JsonMappingException, IOException {
+	public void refreshMeasure(GithubMeasure measure) {
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(measure.getRepoUser(), measure.getRepoName());
 		Collections.sort(stats);
 		Map<Long,Integer> commitPerDay = new TreeMap<Long,Integer>();
@@ -134,16 +134,16 @@ public class GitHubService extends ServiceModuleAbstract<GitHub, GithubMeasure> 
 		repository.save(measure);
 	}
 	
-	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name) throws JsonParseException, JsonMappingException, IOException {
+	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name) {
 		return getStatsCommitActivity(user, name, getApi());
 	}
 	
-	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name, GitHub api) throws JsonParseException, JsonMappingException, IOException {
+	public List<GitHubStatsCommitActivity> getStatsCommitActivity(String user, String name, GitHub api) {
 		return api.statsOperations().getCommitActivity(user, name);
 	}
 
 	@Override
-	public void refreshMeasureOffline(GithubMeasure measure) throws JsonParseException, JsonMappingException, IOException {
+	public void refreshMeasureOffline(GithubMeasure measure) {
 		GitHub api = super.getApiOfMeasureUser(measure);
 		List<GitHubStatsCommitActivity> stats = getStatsCommitActivity(measure.getRepoUser(), measure.getRepoName(), api);
 		Collections.sort(stats);

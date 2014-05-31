@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -45,15 +46,7 @@ public class GitHubController extends BaseController {
 		return github.getAllMeasure();
 	}
 	
-	@RequestMapping({"","/"})
-	public String boards(WebRequest request, Model model, RedirectAttributes redirectAttributes) {
-		if (github.haveConnection())
-			return "measure";
-		redirectAttributes.addFlashAttribute("error", "web.github.noconnection");
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/create/repo/{repoName}")
+	@RequestMapping( value = "/create/repo/{repoName}", method = RequestMethod.GET)
 	public String createMeasure(WebRequest request, Model model, @PathVariable("repoName") String repoName, RedirectAttributes redirectAttributes) {
 		model.asMap().clear();
 		if (github.notExistRepoMeasure(repoName)) {
@@ -66,7 +59,7 @@ public class GitHubController extends BaseController {
 		return "redirect:/measure/github";
 	}
 	
-	@RequestMapping("/refresh/measure/{measureid}")
+	@RequestMapping(value = "/refresh/measure/{measureid}", method = RequestMethod.GET)
 	public String refreshMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid, RedirectAttributes redirectAttributes) {
 		github.refreshMeasure(measureid);
 		model.asMap().clear();
@@ -74,7 +67,7 @@ public class GitHubController extends BaseController {
 		return "redirect:/measure/github";
 	}
 	
-	@RequestMapping("/delete/{measureid}")
+	@RequestMapping(value = "/delete/{measureid}", method = RequestMethod.GET)
 	public String deleteMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid, RedirectAttributes redirectAttributes) {
 		github.deleteMeasureOfId(measureid);
 		model.asMap().clear();
@@ -82,11 +75,19 @@ public class GitHubController extends BaseController {
 		return "redirect:/measure/github";
 	}
 	
-	@RequestMapping("/data/{measureid}/json")
+	@RequestMapping(value = "/data/{measureid}/json", method = RequestMethod.GET)
 	public @ResponseBody List<CommitHighChart> getDataOfMeasure(WebRequest request, Model model,@PathVariable("measureid") String measureid) {
 		GithubMeasure measure = github.getMeasureById(measureid);
 		CommitHighChart commit = new CommitHighChart(measure.getCommitsDay());
 		return Arrays.asList(commit);
+	}
+	
+	@RequestMapping(value={"","/"}, method = RequestMethod.GET)
+	public String boards(WebRequest request, Model model, RedirectAttributes redirectAttributes) {
+		if (github.haveConnection())
+			return "measure";
+		redirectAttributes.addFlashAttribute("error", "web.github.noconnection");
+		return "redirect:/";
 	}
 
 }
