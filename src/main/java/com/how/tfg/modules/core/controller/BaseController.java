@@ -33,6 +33,11 @@ public abstract class BaseController implements Comparable<BaseController> {
 		return code;
 	}
 	
+	@ModelAttribute("principal")
+    public UserDetails getUser() {
+    	return (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+	
 	public ConnectionRepository getRepository() {
 		return repository;
 	}
@@ -92,11 +97,6 @@ public abstract class BaseController implements Comparable<BaseController> {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
-	@ModelAttribute("principal")
-    public UserDetails getUser() {
-    	return (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
 	
 	public int compareTo(BaseController o) {
 		return this.code.compareTo(o.getCode());

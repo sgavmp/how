@@ -86,7 +86,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	public PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices(){
-		PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = new PersistentTokenBasedRememberMeServices("6772b7939386362af7ed96915", userDetailsService(), jdbcTokenRepositoryImpl());
+		PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = 
+				new PersistentTokenBasedRememberMeServices("6772b7939386362af7ed96915", 
+						userDetailsService(), jdbcTokenRepositoryImpl());
 		persistentTokenBasedRememberMeServices.setAlwaysRemember(true);
 		return persistentTokenBasedRememberMeServices;
 	}
@@ -105,7 +107,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     public JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl() {
     	JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
     	jdbcTokenRepositoryImpl.setDataSource(dataSource);
-//    	jdbcTokenRepositoryImpl.setCreateTableOnStartup(true); 
     	return jdbcTokenRepositoryImpl;
     }
 

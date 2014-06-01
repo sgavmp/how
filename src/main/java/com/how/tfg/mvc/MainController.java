@@ -35,17 +35,7 @@ public class MainController {
 	public List<BaseController> getAllApps() {
 		return allApps;
 	}
-
-	@Autowired
-	public void setAllApps(List<BaseController> allApps) {
-		this.allApps = allApps;
-	}
-
-	@Autowired
-	public MainController(UserService service) {
-		this.service = service;
-	}
-
+	
 	@ModelAttribute("menu")
 	public String getMenuOpt() {
 		return "apps";
@@ -55,6 +45,16 @@ public class MainController {
 	public Object getUser() {
 		return SecurityContextHolder.getContext().getAuthentication()
 				.getPrincipal();
+	}
+
+	@Autowired
+	public void setAllApps(List<BaseController> allApps) {
+		this.allApps = allApps;
+	}
+
+	@Autowired
+	public MainController(UserService service) {
+		this.service = service;
 	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET, params = {
