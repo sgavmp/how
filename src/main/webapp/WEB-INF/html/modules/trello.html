@@ -30,6 +30,7 @@
 								<div class="panel-body">
 									<div th:id="${measure.id}" id="container"
 										style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
+										<div th:text="${measure.updateCreation}"></div>
 									<a class="btn btn-danger"
 										th:href="@{'/measure/trello/delete/' + ${measure.id}}"
 										href="/measure/trello/delete/34234">Delete</a>

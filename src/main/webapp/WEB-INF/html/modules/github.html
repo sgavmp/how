@@ -30,6 +30,7 @@
 								class="panel-collapse collapse">
 								<div class="panel-body">
 									<div class="alert alert-info" th:if="${measure.commitsDay.isEmpty()}" th:text="#{web.github.commitsEmpty}"></div>
+									<div th:text="${measure.updateCreation}"></div>
 									<div th:id="${measure.id}" id="container"
 										style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
 									<a class="btn btn-danger"
