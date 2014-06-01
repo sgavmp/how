@@ -22,7 +22,7 @@ public class RefreshMeasureTask {
 	
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(cron="0 0 4,16 * * ?")
+    @Scheduled(cron="0 6 * * * ?")
     public void reportCurrentTime() {
     	System.out.println("Start all refresh " + dateFormat.format(new Date()));
         for (ServiceModuleAbstract<?,?> service : allService) {
