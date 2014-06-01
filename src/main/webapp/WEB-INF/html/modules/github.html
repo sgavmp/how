@@ -30,9 +30,9 @@
 								class="panel-collapse collapse">
 								<div class="panel-body">
 									<div class="alert alert-info" th:if="${measure.commitsDay.isEmpty()}" th:text="#{web.github.commitsEmpty}"></div>
-									<div th:text="${measure.updateCreation}"></div>
 									<div th:id="${measure.id}" id="container"
 										style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
+									<div th:text="${#messages.msg('web.app.measure.update',#dates.format(measure.updateCreation))}"></div>
 									<a class="btn btn-danger"
 										th:href="@{'/measure/github/delete/' + ${measure.id}}"
 										href="/measure/trello/delete/34234">Delete</a>
@@ -63,7 +63,7 @@
 								th:text="#{web.apps.create.github}">Login</h4>
 						</div>
 						<div class="modal-body">
-							<div class="alert alert-info" th:text="#{web.github.commitsEmpty}"></div>
+							<div class="alert alert-info" th:text="#{web.github.infoMeasure}"></div>
 							<ul>
 								<li th:each="repo : ${repos}">
 									<a th:href="@{'/measure/github/create/repo/' + ${repo.name}}"

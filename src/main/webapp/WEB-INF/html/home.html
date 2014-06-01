@@ -69,7 +69,7 @@
 	<main sec:authorize="isAuthenticated()" class="container" id="main-auth">
 		<div class="container">
 			<div class="row centered mt grid">
-				<p>Para acceder a la medida de cada aplicación pulse sobre el logo una vez conectes la cuenta.</p>
+				<p th:text="#{web.app.mesaure.in}">Para acceder a la medida de cada aplicación pulse sobre el logo una vez conectes la cuenta.</p>
 			</div>
 			<div class="row centered mt grid">
 				<div th:each="app : ${apps}" class="col-lg-4">
@@ -82,7 +82,7 @@
 							th:alt="${app.nameApp}" alt="GITHUB"></img></a>
 						<div class="caption">
 							<h4 th:utext="${app.nameApp}">GitHub</h4>
-							<p th:text="${app.description}">GitHub es una forja para alojar proyectos utilizando el
+							<p th:text="#{${app.description}}">GitHub es una forja para alojar proyectos utilizando el
 								sistema de control de versiones Git.</p>
 							<form th:unless="${app.userIsConnect()}" th:action="@{'connect/' + ${app.code}}"
 								method="POST">

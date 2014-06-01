@@ -30,7 +30,7 @@
 								<div class="panel-body">
 									<div th:id="${measure.id}" id="container"
 										style="min-width: 600px; width: 700px; height: 400px; margin: 0 auto"></div>
-										<div th:text="${measure.updateCreation}"></div>
+										<div th:text="${#messages.msg('web.app.measure.update',#dates.format(measure.updateCreation))}"></div>
 									<a class="btn btn-danger"
 										th:href="@{'/measure/trello/delete/' + ${measure.id}}"
 										href="/measure/trello/delete/34234">Delete</a>
@@ -61,6 +61,7 @@
 								th:text="#{web.apps.create.trello}">Login</h4>
 						</div>
 						<div class="modal-body">
+						<div class="alert alert-info" th:text="#{web.trello.infoMeasure}"></div>
 						<ul>
 							<li th:each="board : ${boards}">	
 								<a th:href="@{'/measure/trello/create/board/' + ${board.id}}"

@@ -32,7 +32,7 @@ public class GitHubController extends BaseController {
 		this.nameApp="GitHub";
 		this.url="https://github.com/";
 		this.code="github";
-		this.description="GitHub es una forja para alojar proyectos utilizando el sistema de control de versiones Git.";
+		this.description="web.github.description";
 		this.github = github;
 	}
 	

@@ -26,8 +26,8 @@ public class GlobalExceptionController {
 	@ExceptionHandler({Exception.class, RuntimeException.class})
 	public ModelAndView handleAllException(Exception ex) {
  
-		ModelAndView model = new ModelAndView("home");
-		model.addObject("error", "Ha ocurrido un error");
+		ModelAndView model = new ModelAndView("error");
+		model.addObject("error", "web.error");
  
 		return model;
  
@@ -38,7 +38,7 @@ public class GlobalExceptionController {
 			HttpServletResponse response, Object handler, Exception ex, @PathVariable("error")String error) {
 		
 		ModelAndView model = new ModelAndView("error");
-		model.addObject("error", "Tienes que entrar en el sistema antes de acceder a la web.");
+		model.addObject("error", "web.error.login");
  
 		return model;
 	}
@@ -48,7 +48,7 @@ public class GlobalExceptionController {
 			HttpServletResponse response, Object handler, Exception ex) {
 		
 		ModelAndView model = new ModelAndView("error");
-		model.addObject("error", "Ha ocurrido un error.");
+		model.addObject("error", "web.error");
  
 		return model;
 	}

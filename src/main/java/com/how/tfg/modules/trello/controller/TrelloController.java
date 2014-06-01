@@ -33,7 +33,7 @@ public class TrelloController extends BaseController {
 		this.nameApp="Trello";
 		this.url="https://trello.com/";
 		this.code="trello";
-		this.description="Trello es una aplicacion web que te permite gestionar proyectos y tareas con el metodo Kanban.";
+		this.description="web.trello.description";
 		this.trello = trello;
 	}
 
