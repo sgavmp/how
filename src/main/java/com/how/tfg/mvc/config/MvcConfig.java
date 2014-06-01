@@ -26,16 +26,9 @@ import com.how.tfg.mvc.ModConnectController;
  */
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
-	
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/").setViewName("home");
-    }
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//    	registry.addResourceHandler("/static/**").addResourceLocations("/static/").setCachePeriod(31556926);
     	registry.addResourceHandler("/static/**").addResourceLocations("WEB-INF/static/");
     	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
@@ -67,19 +60,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
     
     @Bean
-    public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
+    public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, 
+    		ConnectionRepository connectionRepository) {
         return new ModConnectController(connectionFactoryLocator, connectionRepository);
     }
-    
-    @Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasenames("messages");
-		messageSource.setDefaultEncoding("utf-8");
-//		messageSource.setCacheSeconds(this.environment.getProperty("cacheSeconds",
-//				Integer.class, -1));
-		return messageSource;
-	}
     
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
